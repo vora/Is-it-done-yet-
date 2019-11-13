@@ -1,0 +1,41 @@
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 25%;
+  height: 35px;
+}
+
+svg {
+  margin-right: 10px;
+}
+
+.inner-box {
+  display: flex;
+  font-style: R;
+}
+
+label {
+  font-size: 17;
+  font-family: "Roboto", sans-serif;
+}
+
+#circle-active {
+  fill: #7b61ff;
+}
+
+#circle-review {
+  fill: #ffc700;
+}
+
+#circle-change {
+  fill: #f24822;
+}
+
+#circle-approved {
+  fill: #1bc47d;
+}
+
+#circle-dev {
+  fill: #ff00ff;
+}
