@@ -1,6 +1,5 @@
 <head> </head>
 <body>
-  <h2>Is it done yet?</h2>
   <div id="status-section">
     <form id="status-form">
       <div id="active">
@@ -45,19 +44,26 @@
       </div>
 
       <input id="textBox" type="text" name="ticketNumber" />
-      <button type="submit" id="apply">Apply</button>
+      <button id="apply">Apply</button>
     </form>
   </div>
 
   <script>
     document.getElementById("apply").onclick = () => {
+      var getCheckedStatus = document.querySelector(
+        'input[name="status"]:checked'
+      ).value;
+
       var getTextElement = document.getElementById("textBox").value;
-      console.log(getTextElement);
+
       parent.postMessage(
         {
           pluginMessage: {
             type: "apply_status",
-            message: getTextElement
+            message: {
+              ticketNumber: getTextElement,
+              status: getCheckedStatus
+            }
           }
         },
         "*"
