@@ -57,42 +57,55 @@
     <input type="radio" id="status-dev" name="status" value="In-development" />
   </div>
 
-  <input id="txtInputTicketNumbers" type="text" />
-  <button id="btnAddTicket" type="menu">+ Add ticket number(s)</button>
+  <input id="txtInputTicketNumbers" type="text" title="test" />
+  <button id="btnAddTicket" type="menu" class="btnClass">
+    + Add ticket number(s)
+  </button>
 
-  <button id="apply" type="submit">Apply</button>
+  <button class="btnClass" id="btnApplyChanges" type="submit">Apply</button>
+  <button class="btnClass" id="btnCancelChanges" type="reset">Cancel</button>
 </div>
 
 <body>
   <script>
     var getButtonElement = document.getElementById("btnAddTicket");
+    var getCancelButtonElement = document.getElementById("btnCancelChanges");
+    var getTextBoxElement = document.getElementById("txtInputTicketNumbers");
+
     getButtonElement.addEventListener("click", () => {
-      console.log("here");
-      var getTextBoxElement = document.getElementById("txtInputTicketNumbers");
       getTextBoxElement.style.display = "block";
+      getCancelButtonElement.style.display = "block";
       getButtonElement.style.display = "none";
     });
 
-    document.getElementById("apply").addEventListener("submit", () => {
-      var getCheckedStatus = document.querySelector(
-        'input[name="status"]:checked'
-      ).value;
-
-      var getTextElement = document.getElementById("txtInputTicketNumbers")
-        .value;
-
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: "apply_status",
-            message: {
-              ticketNumber: getTextElement,
-              status: getCheckedStatus
-            }
-          }
-        },
-        "*"
-      );
+    getCancelButtonElement.addEventListener("click", () => {
+      getTextBoxElement.style.display = "none";
+      getCancelButtonElement.style.display = "none";
+      getButtonElement.style.display = "block";
     });
+
+    document
+      .getElementById("btnApplyChanges")
+      .addEventListener("submit", () => {
+        var getCheckedStatus = document.querySelector(
+          'input[name="status"]:checked'
+        ).value;
+
+        var getTextElement = document.getElementById("txtInputTicketNumbers")
+          .value;
+
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "apply_status",
+              message: {
+                ticketNumber: getTextElement,
+                status: getCheckedStatus
+              }
+            }
+          },
+          "*"
+        );
+      });
   </script>
 </body>

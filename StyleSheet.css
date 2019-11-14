@@ -6,6 +6,26 @@
   max-width: 215px;
 }
 
+.inner-box {
+  display: flex;
+  justify-content: left;
+}
+
+.btnClass {
+  width: 215px;
+  height: 35px;
+
+  cursor: pointer;
+
+  text-align: center;
+  font-size: 17px;
+  line-height: 12px;
+  margin-top: 15px;
+
+  font-family: "Roboto", sans-serif;
+  border-radius: 3px;
+}
+
 label:hover {
   cursor: pointer;
   color: #000000;
@@ -14,11 +34,6 @@ label:hover {
 
 svg {
   margin-right: 15px;
-}
-
-.inner-box {
-  display: flex;
-  justify-content: left;
 }
 
 label {
@@ -33,7 +48,7 @@ label {
   width: 215px;
   height: 35px;
 
-  text-align: center;
+  text-align: left;
   font-size: 17px;
   line-height: 12px;
   margin-top: 15px;
@@ -44,23 +59,26 @@ label {
 }
 
 #btnAddTicket {
-  width: 215px;
-  height: 35px;
-
-  cursor: pointer;
   border: 2px solid #18a0fb;
-
-  text-align: center;
-  font-size: 17px;
-  line-height: 12px;
-  margin-top: 15px;
-
-  font-family: "Roboto", sans-serif;
   background-color: #ffffff;
-  border-radius: 3px;
   color: #18a0fb;
-
   display: block;
+}
+
+#btnApplyChanges {
+  border: 2px solid #18a0fb;
+  font-weight: bold;
+  background-color: #18a0fb;
+  color: #ffffff;
+  display: block;
+}
+
+#btnCancelChanges {
+  border: 2px solid #f0544e;
+  font-weight: bold;
+  background-color: #f0544e;
+  color: #ffffff;
+  display: none;
 }
 
 #circle-active {
