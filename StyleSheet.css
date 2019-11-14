@@ -29,6 +29,20 @@ label {
   opacity: 0.9;
 }
 
+#txtInputTicketNumbers {
+  width: 215px;
+  height: 35px;
+
+  text-align: center;
+  font-size: 17px;
+  line-height: 12px;
+  margin-top: 15px;
+
+  border: 1px solid;
+  border-radius: 3px;
+  display: none;
+}
+
 #btnAddTicket {
   width: 215px;
   height: 35px;
@@ -45,6 +59,8 @@ label {
   background-color: #ffffff;
   border-radius: 3px;
   color: #18a0fb;
+
+  display: block;
 }
 
 #circle-active {
