@@ -2,7 +2,7 @@
   <link rel="stylesheet" type="text/css" href="./StyleSheet.css" />
 </head>
 <div id="status-form">
-  <div class="outerBox">
+  <div class="outerBox" onclick="setBGColorOnClick(this)">
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="outerBox">
+  <div class="outerBox" onclick="setBGColorOnClick(this)">
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <div class="outerBox">
+  <div class="outerBox" onclick="setBGColorOnClick(this)">
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
@@ -61,7 +61,7 @@
     </div>
   </div>
 
-  <div class="outerBox">
+  <div class="outerBox" onclick="setBGColorOnClick(this)">
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div class="outerBox">
+  <div class="outerBox" onclick="setBGColorOnClick(this)">
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
@@ -107,32 +107,25 @@
   </button>
 
   <button class="btnClass" id="btnApplyChanges">Apply</button>
-  <button class="btnClass" id="btnCancelChanges">Cancel</button>
 </div>
 
 <body>
   <script>
     var getButtonElement = document.getElementById("btnAddTicket");
-    var getCancelButtonElement = document.getElementById("btnCancelChanges");
     var getTextBoxElement = document.getElementById("txtInputTicketNumbers");
-    var getOuterBoxElement = document.getElementsByClassName("outerBox");
-
-    getOuterBoxElement.addEventListener("click", () => {
-      alert("test");
-    });
+    var getOuterBoxElements = document.getElementsByClassName("outerBox");
 
     getButtonElement.addEventListener("click", () => {
       getTextBoxElement.style.display = "block";
-      getCancelButtonElement.style.display = "block";
       getButtonElement.style.display = "none";
     });
 
-    getCancelButtonElement.addEventListener("click", () => {
-      getTextBoxElement.style.display = "none";
-      getCancelButtonElement.style.display = "none";
-      getButtonElement.style.display = "block";
-      getTextBoxElement.value = "";
-    });
+    setBGColorOnClick = element => {
+      for (let node of getOuterBoxElements) {
+        node.style.backgroundColor = "";
+      }
+      element.style.backgroundColor = "#ddf1ff";
+    };
 
     document.getElementById("btnApplyChanges").addEventListener("click", () => {
       var getCheckedStatus = document.querySelector(

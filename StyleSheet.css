@@ -78,10 +78,6 @@
   background-color: #ddf1ff;
 }
 
-.outerBox:active {
-  background-color: #ddf1ff;
-}
-
 label:hover {
   cursor: pointer;
   color: #000000;
@@ -139,7 +135,7 @@ label {
 }
 
 #circle-active {
-  fill: #7b61ff;
+  fill: #18a0fb;
 }
 
 #circle-review {
