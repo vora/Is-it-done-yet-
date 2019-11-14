@@ -3,7 +3,11 @@
   align-items: center;
   justify-content: space-between;
   height: 35px;
-  max-width: 215px;
+  max-width: 230px;
+}
+
+.outerBox {
+  max-width: 240px;
 }
 
 .inner-box {
@@ -24,6 +28,58 @@
 
   font-family: "Roboto", sans-serif;
   border-radius: 3px;
+}
+
+.psuedoRadio {
+  display: block;
+  height: 25px;
+  width: 25px;
+  background-color: #e9e9e9;
+  border-radius: 50%;
+  border: 0.5px;
+  cursor: pointer;
+}
+
+.radioContainer:hover input ~ .psuedoRadio {
+  background-color: #ccc;
+}
+
+.radioContainer input {
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.radioContainer input:checked ~ .psuedoRadio {
+  background-color: #ffffff;
+}
+
+.psuedoRadio:after {
+  content: "";
+  display: none;
+}
+
+.radioContainer input:checked ~ .psuedoRadio:after {
+  display: block;
+  position: relative;
+}
+
+.radioContainer .psuedoRadio:after {
+  top: 8px;
+  left: 7px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #6c6c6c;
+}
+
+.outerBox:hover {
+  background-color: #ddf1ff;
+}
+
+.outerBox:active {
+  background-color: #ddf1ff;
 }
 
 label:hover {
@@ -55,6 +111,7 @@ label {
 
   border: 1px solid;
   border-radius: 3px;
+  padding: 5px;
   display: none;
 }
 

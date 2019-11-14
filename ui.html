@@ -2,68 +2,112 @@
   <link rel="stylesheet" type="text/css" href="./StyleSheet.css" />
 </head>
 <div id="status-form">
-  <div class="box">
-    <div class="inner-box">
-      <svg height="20" width="20">
-        <circle id="circle-active" cx="10" cy="10" r="6" />
-      </svg>
-      <label for="status-active">
-        Active
-      </label>
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-active" cx="10" cy="10" r="6" />
+        </svg>
+        <label class="labelText" for="status-active">
+          Active
+        </label>
+      </div>
+      <div class="radioContainer">
+        <input type="radio" id="status-active" name="status" value="Active" />
+        <span class="psuedoRadio"></span>
+      </div>
     </div>
-    <input type="radio" id="status-active" name="status" value="Active" />
-  </div>
-  <div class="box">
-    <div class="inner-box">
-      <svg height="20" width="20">
-        <circle id="circle-review" cx="10" cy="10" r="6" />
-      </svg>
-      <label for="status-review">
-        In-review
-      </label>
-    </div>
-    <input type="radio" id="status-review" name="status" value="In-review" />
-  </div>
-  <div class="box">
-    <div class="inner-box">
-      <svg height="20" width="20">
-        <circle id="circle-change" cx="10" cy="10" r="6" />
-      </svg>
-      <label for="status-change">Needs Changes</label>
-    </div>
-    <input
-      type="radio"
-      id="status-change"
-      name="status"
-      value="Needs changes"
-    />
-  </div>
-  <div class="box">
-    <div class="inner-box">
-      <svg height="20" width="20">
-        <circle id="circle-approved" cx="10" cy="10" r="6" />
-      </svg>
-      <label for="status-approved">Approved</label>
-    </div>
-    <input type="radio" id="status-approved" name="status" value="Approved" />
-  </div>
-  <div class="box">
-    <div class="inner-box">
-      <svg height="20" width="20">
-        <circle id="circle-dev" cx="10" cy="10" r="6" />
-      </svg>
-      <label for="status-dev">In-development</label>
-    </div>
-    <input type="radio" id="status-dev" name="status" value="In-development" />
   </div>
 
-  <input id="txtInputTicketNumbers" type="text" title="test" />
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-review" cx="10" cy="10" r="6" />
+        </svg>
+        <label for="status-review">
+          In-review
+        </label>
+      </div>
+      <div class="radioContainer">
+        <input
+          type="radio"
+          id="status-review"
+          name="status"
+          value="In-review"
+        />
+        <span class="psuedoRadio"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-change" cx="10" cy="10" r="6" />
+        </svg>
+        <label for="status-change">Needs Changes</label>
+      </div>
+      <div class="radioContainer">
+        <input
+          type="radio"
+          id="status-change"
+          name="status"
+          value="Needs changes"
+        />
+        <span class="psuedoRadio"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-approved" cx="10" cy="10" r="6" />
+        </svg>
+        <label for="status-approved">Approved</label>
+      </div>
+      <div class="radioContainer">
+        <input
+          type="radio"
+          id="status-approved"
+          name="status"
+          value="Approved"
+        />
+        <span class="psuedoRadio"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-dev" cx="10" cy="10" r="6" />
+        </svg>
+        <label for="status-dev">In-development</label>
+      </div>
+      <div class="radioContainer">
+        <input
+          type="radio"
+          id="status-dev"
+          name="status"
+          value="In-development"
+        />
+        <span class="psuedoRadio"></span>
+      </div>
+    </div>
+  </div>
+
+  <input id="txtInputTicketNumbers" type="text" />
   <button id="btnAddTicket" type="menu" class="btnClass">
     + Add ticket number(s)
   </button>
 
-  <button class="btnClass" id="btnApplyChanges" type="submit">Apply</button>
-  <button class="btnClass" id="btnCancelChanges" type="reset">Cancel</button>
+  <button class="btnClass" id="btnApplyChanges">Apply</button>
+  <button class="btnClass" id="btnCancelChanges">Cancel</button>
 </div>
 
 <body>
@@ -71,6 +115,11 @@
     var getButtonElement = document.getElementById("btnAddTicket");
     var getCancelButtonElement = document.getElementById("btnCancelChanges");
     var getTextBoxElement = document.getElementById("txtInputTicketNumbers");
+    var getOuterBoxElement = document.getElementsByClassName("outerBox");
+
+    getOuterBoxElement.addEventListener("click", () => {
+      alert("test");
+    });
 
     getButtonElement.addEventListener("click", () => {
       getTextBoxElement.style.display = "block";
@@ -82,30 +131,32 @@
       getTextBoxElement.style.display = "none";
       getCancelButtonElement.style.display = "none";
       getButtonElement.style.display = "block";
+      getTextBoxElement.value = "";
     });
 
-    document
-      .getElementById("btnApplyChanges")
-      .addEventListener("submit", () => {
-        var getCheckedStatus = document.querySelector(
-          'input[name="status"]:checked'
-        ).value;
+    document.getElementById("btnApplyChanges").addEventListener("click", () => {
+      var getCheckedStatus = document.querySelector(
+        'input[name="status"]:checked'
+      ).value;
 
-        var getTextElement = document.getElementById("txtInputTicketNumbers")
-          .value;
+      console.log(getCheckedStatus);
 
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: "apply_status",
-              message: {
-                ticketNumber: getTextElement,
-                status: getCheckedStatus
-              }
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: "apply_status",
+            message: {
+              ticketNumber: getTextBoxElement,
+              status: getCheckedStatus
             }
-          },
-          "*"
-        );
-      });
+          }
+        },
+        "*"
+      );
+
+      g;
+    });
+
+    getTextBoxElement.value = "";
   </script>
 </body>
