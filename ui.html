@@ -1,72 +1,68 @@
 <head>
   <link rel="stylesheet" type="text/css" href="./StyleSheet.css" />
 </head>
+<form id="status-form">
+  <div class="box">
+    <div class="inner-box">
+      <svg height="20" width="20">
+        <circle id="circle-active" cx="10" cy="10" r="6" />
+      </svg>
+      <label for="status-active">
+        Active
+      </label>
+    </div>
+    <input type="radio" id="status-active" name="status" value="Active" />
+  </div>
+  <div class="box">
+    <div class="inner-box">
+      <svg height="20" width="20">
+        <circle id="circle-review" cx="10" cy="10" r="6" />
+      </svg>
+      <label for="status-review">
+        In-review
+      </label>
+    </div>
+    <input type="radio" id="status-review" name="status" value="In-review" />
+  </div>
+  <div class="box">
+    <div class="inner-box">
+      <svg height="20" width="20">
+        <circle id="circle-change" cx="10" cy="10" r="6" />
+      </svg>
+      <label for="status-change">Needs Changes</label>
+    </div>
+    <input
+      type="radio"
+      id="status-change"
+      name="status"
+      value="Needs changes"
+    />
+  </div>
+  <div class="box">
+    <div class="inner-box">
+      <svg height="20" width="20">
+        <circle id="circle-approved" cx="10" cy="10" r="6" />
+      </svg>
+      <label for="status-approved">Approved</label>
+    </div>
+    <input type="radio" id="status-approved" name="status" value="Approved" />
+  </div>
+  <div class="box">
+    <div class="inner-box">
+      <svg height="20" width="20">
+        <circle id="circle-dev" cx="10" cy="10" r="6" />
+      </svg>
+      <label for="status-dev">In-development</label>
+    </div>
+    <input type="radio" id="status-dev" name="status" value="In-development" />
+  </div>
+  <button id="btnAddTicket" type="menu">+ Add ticket number(s)</button>
+  <br />
+  <input id="textBox" type="text" name="ticketNumber" />
+  <button id="apply" type="submit">Apply</button>
+</form>
+
 <body>
-  <form id="status-form">
-    <div class="box">
-      <div class="inner-box">
-        <svg height="20" width="20">
-          <circle id="circle-active" cx="10" cy="10" r="6" />
-        </svg>
-        <label for="status-active">
-          Active
-        </label>
-      </div>
-      <input type="radio" id="status-active" name="status" value="Active" />
-    </div>
-    <div class="box">
-      <div class="inner-box">
-        <svg height="20" width="20">
-          <circle id="circle-review" cx="10" cy="10" r="6" />
-        </svg>
-        <label for="status-review">
-          In-review
-        </label>
-      </div>
-      <input type="radio" id="status-review" name="status" value="In-review" />
-    </div>
-    <div class="box">
-      <div class="inner-box">
-        <svg height="20" width="20">
-          <circle id=""circle-change" cx="10" cy="10" r="6" />
-        </svg>
-        <label for="status-change"> Needs Changes</label>
-      </div>
-      <input
-        type="radio"
-        id="status-change"
-        name="status"
-        value="Needs changes"
-      />
-    </div>
-    <div class="box">
-      <div class="inner-box">
-        <svg height="20" width="20">
-          <circle id="circle-approved" cx="10" cy="10" r="6" />
-        </svg>
-        <label for="status-approved"> Approved</label>
-      </div>
-      <input type="radio" id="status-approved" name="status" value="Approved" />
-    </div>
-    <div class="box">
-      <div class="inner-box">
-        <svg height="20" width="20">
-          <circle id="circle-dev" cx="10" cy="10" r="6" />
-        </svg>
-        <label for="status-dev"> In-development</label>
-      </div>
-      <input
-        type="radio"
-        id="status-dev"
-        name="status"
-        value="In-development"
-      />
-    </div>
-
-    <input id="textBox" type="text" name="ticketNumber" />
-    <button id="apply" type="submit">Apply</button>
-  </form>
-
   <script>
     document.querySelector("form").addEventListener("submit", () => {
       var getCheckedStatus = document.querySelector(
