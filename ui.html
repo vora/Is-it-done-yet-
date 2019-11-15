@@ -111,23 +111,34 @@
     </div>
   </div>
 
-  <input id="txtInputTicketNumbers" type="text" />
-  <button id="btnAddTicket" type="menu" class="btnClass">
-    + Add ticket number(s)
-  </button>
+  <div id="inputContainer">
+    <input id="txtInputTicketNumbers" type="text" />
+    <button id="btnCancel" type="button">x</button>
+    <button class="btnClass" id="btnAddTicket">
+      + Add ticket number(s)
+    </button>
+  </div>
 
   <button class="btnClass" id="btnApplyChanges">Apply</button>
 </div>
 
 <body>
   <script>
-    var getButtonElement = document.getElementById("btnAddTicket");
+    var getAddTicketButton = document.getElementById("btnAddTicket");
+    var getCancelButton = document.getElementById("btnCancel");
     var getTextBoxElement = document.getElementById("txtInputTicketNumbers");
     var getOuterBoxElements = document.getElementsByClassName("outerBox");
 
-    getButtonElement.addEventListener("click", () => {
+    getAddTicketButton.addEventListener("click", () => {
       getTextBoxElement.style.display = "block";
-      getButtonElement.style.display = "none";
+      getCancelButton.style.display = "block";
+      getAddTicketButton.style.display = "none";
+    });
+
+    getCancelButton.addEventListener("click", () => {
+      getTextBoxElement.style.display = "none";
+      getCancelButton.style.display = "none";
+      getAddTicketButton.style.display = "block";
     });
 
     setBGColorOnClick = element => {
@@ -156,8 +167,6 @@
         },
         "*"
       );
-
-      g;
     });
 
     getTextBoxElement.value = "";

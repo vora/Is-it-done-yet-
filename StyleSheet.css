@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   height: 35px;
-  max-width: 230px;
+  max-width: 235px;
 }
 
 .outerBox {
@@ -16,7 +16,7 @@
 }
 
 .btnClass {
-  width: 215px;
+  width: 235px;
   height: 35px;
 
   cursor: pointer;
@@ -41,7 +41,7 @@
 }
 
 .radioContainer:hover input ~ .psuedoRadio {
-  background-color: #ccc;
+  background-color: #ffffff;
 }
 
 .radioContainer input {
@@ -88,7 +88,7 @@ svg {
 }
 
 label {
-  width: 160px;
+  width: 165px;
   font-size: 17px;
   font-family: "Roboto", sans-serif;
   color: #6c6c6c;
@@ -96,7 +96,9 @@ label {
 }
 
 #txtInputTicketNumbers {
-  width: 215px;
+  display: none;
+
+  width: 200px;
   height: 35px;
 
   text-align: left;
@@ -107,7 +109,31 @@ label {
   border: 1px solid;
   border-radius: 3px;
   padding: 5px;
+}
+
+#inputContainer {
+  display: flex;
+  max-width: 235px;
+}
+
+#btnCancel {
   display: none;
+
+  height: 35px;
+  width: 35px;
+  margin-top: 15px;
+
+  border: 2px solid #18a0fb;
+  border-radius: 3px;
+
+  color: #18a0fb;
+  background-color: #ffffff;
+  font-weight: bold;
+  font-size: 15px;
+
+  text-align: center;
+
+  cursor: pointer;
 }
 
 #btnAddTicket {
