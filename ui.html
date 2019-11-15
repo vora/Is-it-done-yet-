@@ -1,17 +1,73 @@
-<h2>Rectangle Creator</h2>
-<p>Count: <input id="count" value="5"></p>
-<button id="create">Create</button>
-<button id="cancel">Cancel</button>
-<script>
+<head> </head>
+<body>
+  <div id="status-section">
+    <form id="status-form">
+      <div id="active">
+        <label for="status-active">Active</label>
+        <input type="radio" id="status-active" name="status" value="Active" />
+      </div>
+      <div id="in-review">
+        <label for="status-review">In-review</label>
+        <input
+          type="radio"
+          id="status-review"
+          name="status"
+          value="In-review"
+        />
+      </div>
+      <div id="needs-changes">
+        <label for="status-change">Needs Changes</label>
+        <input
+          type="radio"
+          id="status-change"
+          name="status"
+          value="Needs changes"
+        />
+      </div>
+      <div id="approved">
+        <label for="status-approved">Approved</label>
+        <input
+          type="radio"
+          id="status-approved"
+          name="status"
+          value="Approved"
+        />
+      </div>
+      <div id="In-development">
+        <label for="status-dev">In-development</label>
+        <input
+          type="radio"
+          id="status-dev"
+          name="status"
+          value="In-development"
+        />
+      </div>
 
-document.getElementById('create').onclick = () => {
-  const textbox = document.getElementById('count');
-  const count = parseInt(textbox.value, 10);
-  parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
-}
+      <input id="textBox" type="text" name="ticketNumber" />
+      <button id="apply">Apply</button>
+    </form>
+  </div>
 
-document.getElementById('cancel').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-}
+  <script>
+    document.getElementById("apply").onclick = () => {
+      var getCheckedStatus = document.querySelector(
+        'input[name="status"]:checked'
+      ).value;
 
-</script>
+      var getTextElement = document.getElementById("textBox").value;
+
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: "apply_status",
+            message: {
+              ticketNumber: getTextElement,
+              status: getCheckedStatus
+            }
+          }
+        },
+        "*"
+      );
+    };
+  </script>
+</body>
