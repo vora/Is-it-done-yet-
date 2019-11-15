@@ -1,73 +1,173 @@
-<head> </head>
-<body>
-  <div id="status-section">
-    <form id="status-form">
-      <div id="active">
-        <label for="status-active">Active</label>
-        <input type="radio" id="status-active" name="status" value="Active" />
+<head>
+  <link rel="stylesheet" type="text/css" href="./StyleSheet.css" />
+</head>
+<div id="status-form">
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-active" cx="10" cy="10" r="6" />
+        </svg>
+        <label>
+          Active
+        </label>
       </div>
-      <div id="in-review">
-        <label for="status-review">In-review</label>
-        <input
-          type="radio"
-          id="status-review"
-          name="status"
-          value="In-review"
-        />
+      <div class="radioContainer" onclick="setBGColorOnClick(this)">
+        <label>
+          <input type="radio" id="status-active" name="status" value="Active" />
+          <span class="psuedoRadio"></span>
+        </label>
       </div>
-      <div id="needs-changes">
-        <label for="status-change">Needs Changes</label>
-        <input
-          type="radio"
-          id="status-change"
-          name="status"
-          value="Needs changes"
-        />
-      </div>
-      <div id="approved">
-        <label for="status-approved">Approved</label>
-        <input
-          type="radio"
-          id="status-approved"
-          name="status"
-          value="Approved"
-        />
-      </div>
-      <div id="In-development">
-        <label for="status-dev">In-development</label>
-        <input
-          type="radio"
-          id="status-dev"
-          name="status"
-          value="In-development"
-        />
-      </div>
-
-      <input id="textBox" type="text" name="ticketNumber" />
-      <button id="apply">Apply</button>
-    </form>
+    </div>
   </div>
 
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-review" cx="10" cy="10" r="6" />
+        </svg>
+        <label>
+          In-review
+        </label>
+      </div>
+      <div class="radioContainer" onclick="setBGColorOnClick(this)">
+        <label>
+          <input
+            type="radio"
+            id="status-review"
+            name="status"
+            value="In-review"
+          />
+          <span class="psuedoRadio"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-change" cx="10" cy="10" r="6" />
+        </svg>
+        <label>Needs Changes</label>
+      </div>
+      <div class="radioContainer" onclick="setBGColorOnClick(this)">
+        <label>
+          <input
+            type="radio"
+            id="status-change"
+            name="status"
+            value="Needs changes"
+          />
+          <span class="psuedoRadio"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-approved" cx="10" cy="10" r="6" />
+        </svg>
+        <label>Approved</label>
+      </div>
+      <div class="radioContainer" onclick="setBGColorOnClick(this)">
+        <label>
+          <input
+            type="radio"
+            id="status-approved"
+            name="status"
+            value="Approved"
+          />
+          <span class="psuedoRadio"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="outerBox">
+    <div class="box">
+      <div class="inner-box">
+        <svg height="20" width="20">
+          <circle id="circle-dev" cx="10" cy="10" r="6" />
+        </svg>
+        <label>In-development</label>
+      </div>
+      <div class="radioContainer" onclick="setBGColorOnClick(this)">
+        <label>
+          <input
+            type="radio"
+            id="status-dev"
+            name="status"
+            value="In-development"
+          />
+          <span class="psuedoRadio"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="inputContainer">
+    <div contenteditable="true" id="ticketNumberContainer"></div>
+    <button id="btnCancel" type="button">x</button>
+    <button class="btnClass" id="btnAddTicket">
+      + Add ticket number(s)
+    </button>
+  </div>
+
+  <button class="btnClass" id="btnApplyChanges">Apply</button>
+</div>
+
+<body>
   <script>
-    document.getElementById("apply").onclick = () => {
+    var getAddTicketButton = document.getElementById("btnAddTicket");
+    var getCancelButton = document.getElementById("btnCancel");
+    var getTextBoxElement = document.getElementById("ticketNumberContainer");
+    var getOuterBoxElements = document.getElementsByClassName("outerBox");
+    var ticketBoxConents = document.querySelector("[contentEditable]")
+      .textContent;
+
+    getAddTicketButton.addEventListener("click", () => {
+      getTextBoxElement.style.display = "block";
+      getCancelButton.style.display = "block";
+      getAddTicketButton.style.display = "none";
+    });
+
+    getCancelButton.addEventListener("click", () => {
+      getTextBoxElement.style.display = "none";
+      getCancelButton.style.display = "none";
+      getAddTicketButton.style.display = "block";
+      console.log(ticketBoxConents);
+    });
+
+    setBGColorOnClick = element => {
+      for (let node of getOuterBoxElements) {
+        node.style.backgroundColor = "";
+      }
+      element.parentNode.parentNode.style.backgroundColor = "#ddf1ff";
+    };
+
+    document.getElementById("btnApplyChanges").addEventListener("click", () => {
       var getCheckedStatus = document.querySelector(
         'input[name="status"]:checked'
       ).value;
-
-      var getTextElement = document.getElementById("textBox").value;
 
       parent.postMessage(
         {
           pluginMessage: {
             type: "apply_status",
             message: {
-              ticketNumber: getTextElement,
+              ticketNumber: getTextBoxElement,
               status: getCheckedStatus
             }
           }
         },
         "*"
       );
-    };
+    });
   </script>
 </body>
