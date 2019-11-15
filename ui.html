@@ -112,7 +112,7 @@
   </div>
 
   <div id="inputContainer">
-    <input id="txtInputTicketNumbers" type="text" />
+    <div contenteditable="true" id="ticketNumberContainer"></div>
     <button id="btnCancel" type="button">x</button>
     <button class="btnClass" id="btnAddTicket">
       + Add ticket number(s)
@@ -126,8 +126,10 @@
   <script>
     var getAddTicketButton = document.getElementById("btnAddTicket");
     var getCancelButton = document.getElementById("btnCancel");
-    var getTextBoxElement = document.getElementById("txtInputTicketNumbers");
+    var getTextBoxElement = document.getElementById("ticketNumberContainer");
     var getOuterBoxElements = document.getElementsByClassName("outerBox");
+    var ticketBoxConents = document.querySelector("[contentEditable]")
+      .textContent;
 
     getAddTicketButton.addEventListener("click", () => {
       getTextBoxElement.style.display = "block";
@@ -139,6 +141,7 @@
       getTextBoxElement.style.display = "none";
       getCancelButton.style.display = "none";
       getAddTicketButton.style.display = "block";
+      console.log(ticketBoxConents);
     });
 
     setBGColorOnClick = element => {
@@ -153,8 +156,6 @@
         'input[name="status"]:checked'
       ).value;
 
-      console.log(getCheckedStatus);
-
       parent.postMessage(
         {
           pluginMessage: {
@@ -168,7 +169,5 @@
         "*"
       );
     });
-
-    getTextBoxElement.value = "";
   </script>
 </body>

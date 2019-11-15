@@ -95,20 +95,22 @@ label {
   opacity: 0.9;
 }
 
-#txtInputTicketNumbers {
+#ticketNumberContainer {
   display: none;
 
   width: 200px;
-  height: 35px;
+  height: 20px;
 
   text-align: left;
-  font-size: 17px;
-  line-height: 12px;
+  font-size: 15px;
+  color: #6c6c6c;
+  background-color: #f0efef;
   margin-top: 15px;
 
-  border: 1px solid;
+  border: 0.5px solid;
   border-radius: 3px;
-  padding: 5px;
+
+  padding: 7px 4px;
 }
 
 #inputContainer {
