@@ -128,8 +128,6 @@
     var getCancelButton = document.getElementById("btnCancel");
     var getTextBoxElement = document.getElementById("ticketNumberContainer");
     var getOuterBoxElements = document.getElementsByClassName("outerBox");
-    var ticketBoxConents = document.querySelector("[contentEditable]")
-      .textContent;
 
     getAddTicketButton.addEventListener("click", () => {
       getTextBoxElement.style.display = "block";
@@ -141,7 +139,7 @@
       getTextBoxElement.style.display = "none";
       getCancelButton.style.display = "none";
       getAddTicketButton.style.display = "block";
-      console.log(ticketBoxConents);
+      document.getElementById("ticketNumberContainer").textContent = "";
     });
 
     setBGColorOnClick = element => {
@@ -168,6 +166,10 @@
         },
         "*"
       );
+
+      //Clear contents after success
+
+      document.getElementById("ticketNumberContainer").textContent = "";
     });
   </script>
 </body>
