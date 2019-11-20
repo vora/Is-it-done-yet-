@@ -128,11 +128,13 @@
     var getCancelButton = document.getElementById("btnCancel");
     var getTextBoxElement = document.getElementById("ticketNumberContainer");
     var getOuterBoxElements = document.getElementsByClassName("outerBox");
+    var setSpaceKeyValue = 0;
 
     getAddTicketButton.addEventListener("click", () => {
       getTextBoxElement.style.display = "block";
       getCancelButton.style.display = "block";
       getAddTicketButton.style.display = "none";
+      setSpaceKeyValue = 0;
     });
 
     getCancelButton.addEventListener("click", () => {
@@ -148,6 +150,19 @@
       }
       element.parentNode.parentNode.style.backgroundColor = "#ddf1ff";
     };
+
+    document
+      .getElementById("ticketNumberContainer")
+      .addEventListener("keypress", e => {
+        if (e.keyCode == 32) {
+          console.log(setSpaceKeyValue);
+          if (setSpaceKeyValue == 2) {
+            e.preventDefault();
+          } else {
+            setSpaceKeyValue++;
+          }
+        }
+      });
 
     document.getElementById("btnApplyChanges").addEventListener("click", () => {
       var getCheckedStatus = document.querySelector(
