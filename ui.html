@@ -190,6 +190,7 @@
     }
   </style>
 </head>
+
 <div id="status-form">
   <div class="outerBox">
     <div class="box">
@@ -367,7 +368,7 @@
           type: "apply_status",
           message: {
             ticketNumber: getTextBoxContent,
-            status: getCheckedStatus
+            status: JSON.stringify(document.getElementById("circle-dev"))
           }
         }
       };
