@@ -1,5 +1,194 @@
 <head>
-  <link rel="stylesheet" type="text/css" href="./StyleSheet.css" />
+  <link rel="stylesheet" type="text/css" href="./StyleSheet1.css" />
+  <style>
+    .box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 35px;
+      max-width: 235px;
+    }
+
+    .outerBox {
+      max-width: 240px;
+    }
+
+    .inner-box {
+      display: flex;
+      justify-content: left;
+    }
+
+    .btnClass {
+      width: 235px;
+      height: 35px;
+
+      cursor: pointer;
+
+      text-align: center;
+      font-size: 17px;
+      line-height: 12px;
+      margin-top: 15px;
+
+      font-family: "Roboto", sans-serif;
+      border-radius: 3px;
+    }
+
+    .psuedoRadio {
+      display: block;
+      height: 25px;
+      width: 25px;
+      background-color: #e9e9e9;
+      border-radius: 50%;
+      border: 0.5px;
+      cursor: pointer;
+    }
+
+    .radioContainer:hover input ~ .psuedoRadio {
+      background-color: #ffffff;
+    }
+
+    .radioContainer input {
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .radioContainer input:checked ~ .psuedoRadio {
+      background-color: #ffffff;
+    }
+
+    .psuedoRadio:after {
+      content: "";
+      display: none;
+    }
+
+    .radioContainer input:checked ~ .psuedoRadio:after {
+      display: block;
+      position: relative;
+    }
+
+    .radioContainer .psuedoRadio:after {
+      top: 8px;
+      left: 7px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #6c6c6c;
+    }
+
+    .outerBox:hover {
+      background-color: #ddf1ff;
+    }
+
+    label:hover {
+      color: #000000;
+      opacity: 1;
+    }
+
+    svg {
+      margin-right: 15px;
+    }
+
+    label {
+      width: 165px;
+      font-size: 17px;
+      font-family: "Roboto", sans-serif;
+      color: #6c6c6c;
+      opacity: 0.9;
+    }
+
+    [contentEditable] {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: inherit;
+    }
+    #ticketNumberContainer {
+      display: none;
+
+      width: 200px;
+      height: 20px;
+
+      text-align: left;
+      font-size: 15px;
+      color: #6c6c6c;
+      background-color: #f0efef;
+      margin-top: 15px;
+
+      border: 0.5px solid;
+      border-radius: 3px;
+
+      padding: 7px 4px;
+    }
+
+    #inputContainer {
+      display: flex;
+      max-width: 235px;
+    }
+
+    #btnCancel {
+      display: none;
+
+      height: 35px;
+      width: 35px;
+      margin-top: 15px;
+
+      border: 2px solid #18a0fb;
+      border-radius: 3px;
+
+      color: #18a0fb;
+      background-color: #ffffff;
+      font-weight: bold;
+      font-size: 15px;
+
+      text-align: center;
+
+      cursor: pointer;
+    }
+
+    #btnAddTicket {
+      border: 2px solid #18a0fb;
+      background-color: #ffffff;
+      color: #18a0fb;
+      display: block;
+    }
+
+    #btnApplyChanges {
+      border: 2px solid #18a0fb;
+      font-weight: bold;
+      background-color: #18a0fb;
+      color: #ffffff;
+      display: block;
+    }
+
+    #btnCancelChanges {
+      border: 2px solid #f0544e;
+      font-weight: bold;
+      background-color: #f0544e;
+      color: #ffffff;
+      display: none;
+    }
+
+    #circle-active {
+      fill: #18a0fb;
+    }
+
+    #circle-review {
+      fill: #ffc700;
+    }
+
+    #circle-change {
+      fill: #f24822;
+    }
+
+    #circle-approved {
+      fill: #1bc47d;
+    }
+
+    #circle-dev {
+      fill: #ff00ff;
+    }
+  </style>
 </head>
 <div id="status-form">
   <div class="outerBox">
@@ -128,13 +317,11 @@
     var getCancelButton = document.getElementById("btnCancel");
     var getTextBoxElement = document.getElementById("ticketNumberContainer");
     var getOuterBoxElements = document.getElementsByClassName("outerBox");
-    var setSpaceKeyValue = 0;
 
     getAddTicketButton.addEventListener("click", () => {
       getTextBoxElement.style.display = "block";
       getCancelButton.style.display = "block";
       getAddTicketButton.style.display = "none";
-      setSpaceKeyValue = 0;
     });
 
     getCancelButton.addEventListener("click", () => {
@@ -154,37 +341,40 @@
     document
       .getElementById("ticketNumberContainer")
       .addEventListener("keypress", e => {
-        if (e.keyCode == 32) {
-          console.log(setSpaceKeyValue);
-          if (setSpaceKeyValue == 2) {
-            e.preventDefault();
-          } else {
-            setSpaceKeyValue++;
-          }
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          processInputData();
         }
       });
 
     document.getElementById("btnApplyChanges").addEventListener("click", () => {
-      var getCheckedStatus = document.querySelector(
-        'input[name="status"]:checked'
-      ).value;
+      processInputData();
+    });
 
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: "apply_status",
-            message: {
-              ticketNumber: getTextBoxElement,
-              status: getCheckedStatus
-            }
+    processInputData = () => {
+      var getStatus = document.querySelector('input[name="status"]:checked');
+      var getTextBoxContent = document.getElementById("ticketNumberContainer")
+        .textContent;
+
+      if (getStatus != null) {
+        var getCheckedStatus = document.querySelector(
+          'input[name="status"]:checked'
+        ).value;
+      }
+
+      var pluginMessageObj = {
+        pluginMessage: {
+          type: "apply_status",
+          message: {
+            ticketNumber: getTextBoxContent,
+            status: getCheckedStatus
           }
-        },
-        "*"
-      );
+        }
+      };
+
+      parent.postMessage(pluginMessageObj, "*");
 
       //Clear contents after success
-
-      document.getElementById("ticketNumberContainer").textContent = "";
-    });
+    };
   </script>
 </body>
