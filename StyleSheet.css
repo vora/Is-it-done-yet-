@@ -95,6 +95,11 @@ label {
   opacity: 0.9;
 }
 
+[contentEditable] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: inherit;
+}
 #ticketNumberContainer {
   display: none;
 
