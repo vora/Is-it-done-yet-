@@ -7,21 +7,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-figma.showUI(__html__);
+var iFrameProps = {
+    width: 260,
+    height: 300
+};
+figma.showUI(__html__, iFrameProps);
+function generateText(status, ticketNumber) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield figma.loadFontAsync({ family: "Roboto", style: "Regular" });
+        let mytext = figma.createText();
+        let ellipse = figma.createEllipse();
+        ellipse.resize(25, 25);
+        mytext.characters = status + " " + ticketNumber;
+        figma.currentPage.appendChild(ellipse);
+        figma.currentPage.appendChild(mytext);
+    });
+}
 figma.ui.onmessage = (msg) => {
     if (msg.type === "apply_status") {
-        figma.currentPage.selection.forEach((node) => __awaiter(this, void 0, void 0, function* () {
-            yield figma.loadFontAsync({
-                family: "Inter",
-                style: "Medium"
-            });
-            let textStyle = figma.createTextStyle();
-            textStyle.name = "Something here";
-            var newText = figma.createText();
-            // if (node.name) {
-            //   node.name = msg.message.status + " " + msg.message.ticketNumber;
-            // }
-        }));
+        figma.currentPage.selection.forEach(node => {
+            generateText(msg.message.status, msg.message.ticketNumber);
+            if (node.name) {
+                node.name = msg.message.status + " " + msg.message.ticketNumber;
+            }
+        });
     }
-    //figma.closePlugin();
+    figma.closePlugin();
 };
