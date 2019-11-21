@@ -48,12 +48,21 @@ const setColors = (fills, color) => {
     fills[0].color.b = color.b;
     return fills;
 };
-const generateStatus = (status, color, ticketNumber) => __awaiter(this, void 0, void 0, function* () {
+const determineCoordinatesPosition = (node, ellipseNode, textNode) => {
+    var positionObj = {
+        ellipseNodeCoordinateX: node.x + node.width - textNode.width - ellipseNode.width - 1,
+        ellipseNodeCoordinateY: node.y - ellipseNode.height,
+        textNodeCoordianteX: node.x + node.width - textNode.width,
+        textNodeCoordinateY: node.y - textNode.height
+    };
+    return positionObj;
+};
+const generateStatus = (node, status, color, ticketNumber) => __awaiter(this, void 0, void 0, function* () {
     yield figma.loadFontAsync({ family: "Roboto", style: "Regular" });
-    let mytext = figma.createText();
-    let ellipse = figma.createEllipse();
-    ellipse.resize(15, 15);
-    ellipse.fills = [
+    let textNode = figma.createText();
+    let ellipseNode = figma.createEllipse();
+    ellipseNode.resize(11, 11);
+    ellipseNode.fills = [
         {
             type: "SOLID",
             color: {
@@ -63,20 +72,25 @@ const generateStatus = (status, color, ticketNumber) => __awaiter(this, void 0, 
             }
         }
     ];
-    mytext.characters = status + " " + ticketNumber;
-    mytext.fontSize = 9;
-    figma.currentPage.appendChild(ellipse);
-    figma.currentPage.appendChild(mytext);
+    var coordinateObj = determineCoordinatesPosition(node, ellipseNode, textNode);
+    ellipseNode.x = coordinateObj["ellipseNodeCoordinateX"];
+    ellipseNode.y = coordinateObj["ellipseNodeCoordinateY"];
+    textNode.x = coordinateObj["textNodeCoordianteX"];
+    textNode.y = coordinateObj["textNodeCoordinateY"];
+    textNode.characters = status + " " + ticketNumber;
+    textNode.fontSize = 9;
+    figma.currentPage.appendChild(ellipseNode);
+    figma.currentPage.appendChild(textNode);
 });
 figma.ui.onmessage = (param) => {
     if (param.type === "apply_status") {
         figma.currentPage.selection.forEach(node => {
             var color = statusColors[param.message.status];
-            generateStatus(param.message.status, color, param.message.ticketNumber);
+            generateStatus(node, param.message.status, color, param.message.ticketNumber);
             if (node.name) {
                 node.name = param.message.status + " " + param.message.ticketNumber;
             }
         });
     }
-    figma.closePlugin();
+    //figma.closePlugin();
 };
