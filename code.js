@@ -39,9 +39,6 @@ const statusColors = {
     }
 };
 figma.showUI(__html__, iFrameProps);
-const clone = val => {
-    return JSON.parse(JSON.stringify(val));
-};
 const setColors = (fills, color) => {
     fills[0].color.r = color.r;
     fills[0].color.g = color.g;
