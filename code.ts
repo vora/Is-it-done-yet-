@@ -80,7 +80,7 @@ const determineCoordinatesPosition = (
 };
 
 const generateStatus = async (
-  node: SceneNode,
+  node: FrameNode,
   status: string,
   color: IColorIndex,
   ticketNumber?: string
@@ -103,7 +103,7 @@ const generateStatus = async (
   ];
 
   textNode.characters = status + " " + ticketNumber;
-  textNode.fontSize = 6;
+  textNode.fontSize = 9;
 
   var coordinateObj = determineCoordinatesPosition(node, ellipseNode, textNode);
 
@@ -120,16 +120,23 @@ const generateStatus = async (
 figma.ui.onmessage = (param: IPluginMessage) => {
   if (param.type === "apply_status") {
     figma.currentPage.selection.forEach(node => {
-      var color = statusColors[param.message.status];
-      generateStatus(
-        node,
-        param.message.status,
-        color,
-        param.message.ticketNumber
-      );
+      if (node.type == "FRAME") {
+        //node.clipsContent = false;
+        var color = statusColors[param.message.status];
+        generateStatus(
+          node,
+          param.message.status,
+          color,
+          param.message.ticketNumber
+        );
 
-      if (node.name) {
-        node.name = param.message.status + " " + param.message.ticketNumber;
+        if (node.name) {
+          node.name =
+            "\uD83D\uDE42" +
+            param.message.status +
+            " " +
+            param.message.ticketNumber;
+        }
       }
     });
   }

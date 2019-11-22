@@ -70,7 +70,7 @@ const generateStatus = (node, status, color, ticketNumber) => __awaiter(this, vo
         }
     ];
     textNode.characters = status + " " + ticketNumber;
-    textNode.fontSize = 6;
+    textNode.fontSize = 9;
     var coordinateObj = determineCoordinatesPosition(node, ellipseNode, textNode);
     ellipseNode.x = coordinateObj["ellipseNodeCoordinateX"];
     ellipseNode.y = coordinateObj["ellipseNodeCoordinateY"];
@@ -82,10 +82,17 @@ const generateStatus = (node, status, color, ticketNumber) => __awaiter(this, vo
 figma.ui.onmessage = (param) => {
     if (param.type === "apply_status") {
         figma.currentPage.selection.forEach(node => {
-            var color = statusColors[param.message.status];
-            generateStatus(node, param.message.status, color, param.message.ticketNumber);
-            if (node.name) {
-                node.name = param.message.status + " " + param.message.ticketNumber;
+            if (node.type == "FRAME") {
+                //node.clipsContent = false;
+                var color = statusColors[param.message.status];
+                generateStatus(node, param.message.status, color, param.message.ticketNumber);
+                if (node.name) {
+                    node.name =
+                        "\uD83D\uDE42" +
+                            param.message.status +
+                            " " +
+                            param.message.ticketNumber;
+                }
             }
         });
     }
