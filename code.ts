@@ -93,7 +93,7 @@ const generateStatus = async (
   let textNode = figma.createText();
   let ellipseNode = figma.createEllipse();
 
-  ellipseNode.resize(11, 11);
+  ellipseNode.resize(7, 7);
 
   ellipseNode.fills = [
     {
@@ -106,6 +106,9 @@ const generateStatus = async (
     }
   ];
 
+  textNode.characters = status + " " + ticketNumber;
+  textNode.fontSize = 6;
+
   var coordinateObj = determineCoordinatesPosition(node, ellipseNode, textNode);
 
   ellipseNode.x = coordinateObj["ellipseNodeCoordinateX"];
@@ -113,9 +116,6 @@ const generateStatus = async (
 
   textNode.x = coordinateObj["textNodeCoordianteX"];
   textNode.y = coordinateObj["textNodeCoordinateY"];
-
-  textNode.characters = status + " " + ticketNumber;
-  textNode.fontSize = 6;
 
   figma.currentPage.appendChild(ellipseNode);
   figma.currentPage.appendChild(textNode);
@@ -138,5 +138,5 @@ figma.ui.onmessage = (param: IPluginMessage) => {
     });
   }
 
-  //figma.closePlugin();
+  figma.closePlugin();
 };

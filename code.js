@@ -61,7 +61,7 @@ const generateStatus = (node, status, color, ticketNumber) => __awaiter(this, vo
     yield figma.loadFontAsync({ family: "Roboto", style: "Regular" });
     let textNode = figma.createText();
     let ellipseNode = figma.createEllipse();
-    ellipseNode.resize(11, 11);
+    ellipseNode.resize(7, 7);
     ellipseNode.fills = [
         {
             type: "SOLID",
@@ -72,13 +72,13 @@ const generateStatus = (node, status, color, ticketNumber) => __awaiter(this, vo
             }
         }
     ];
+    textNode.characters = status + " " + ticketNumber;
+    textNode.fontSize = 6;
     var coordinateObj = determineCoordinatesPosition(node, ellipseNode, textNode);
     ellipseNode.x = coordinateObj["ellipseNodeCoordinateX"];
     ellipseNode.y = coordinateObj["ellipseNodeCoordinateY"];
     textNode.x = coordinateObj["textNodeCoordianteX"];
     textNode.y = coordinateObj["textNodeCoordinateY"];
-    textNode.characters = status + " " + ticketNumber;
-    textNode.fontSize = 6;
     figma.currentPage.appendChild(ellipseNode);
     figma.currentPage.appendChild(textNode);
 });
@@ -92,5 +92,5 @@ figma.ui.onmessage = (param) => {
             }
         });
     }
-    //figma.closePlugin();
+    figma.closePlugin();
 };
