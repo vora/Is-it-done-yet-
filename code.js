@@ -78,7 +78,7 @@ const generateStatus = (node, status, color, ticketNumber) => __awaiter(this, vo
     textNode.x = coordinateObj["textNodeCoordianteX"];
     textNode.y = coordinateObj["textNodeCoordinateY"];
     textNode.characters = status + " " + ticketNumber;
-    textNode.fontSize = 9;
+    textNode.fontSize = 6;
     figma.currentPage.appendChild(ellipseNode);
     figma.currentPage.appendChild(textNode);
 });
