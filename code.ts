@@ -69,8 +69,8 @@ const setColors = (fills: any, color: IColorIndex) => {
 
 const determineCoordinatesPosition = (
   node: SceneNode,
-  ellipseNode?: EllipseNode,
-  textNode?: TextNode
+  ellipseNode: EllipseNode,
+  textNode: TextNode
 ) => {
   var positionObj: INodeCoordinates = {
     ellipseNodeCoordinateX:
