@@ -1,6 +1,7 @@
 <head>
   <link rel="stylesheet" type="text/css" href="./StyleSheet.css" />
 </head>
+
 <div id="status-form">
   <div class="outerBox">
     <div class="box">
@@ -128,8 +129,6 @@
     var getCancelButton = document.getElementById("btnCancel");
     var getTextBoxElement = document.getElementById("ticketNumberContainer");
     var getOuterBoxElements = document.getElementsByClassName("outerBox");
-    var ticketBoxConents = document.querySelector("[contentEditable]")
-      .textContent;
 
     getAddTicketButton.addEventListener("click", () => {
       getTextBoxElement.style.display = "block";
@@ -141,7 +140,7 @@
       getTextBoxElement.style.display = "none";
       getCancelButton.style.display = "none";
       getAddTicketButton.style.display = "block";
-      console.log(ticketBoxConents);
+      document.getElementById("ticketNumberContainer").textContent = "";
     });
 
     setBGColorOnClick = element => {
@@ -151,23 +150,43 @@
       element.parentNode.parentNode.style.backgroundColor = "#ddf1ff";
     };
 
-    document.getElementById("btnApplyChanges").addEventListener("click", () => {
-      var getCheckedStatus = document.querySelector(
-        'input[name="status"]:checked'
-      ).value;
+    document
+      .getElementById("ticketNumberContainer")
+      .addEventListener("keypress", e => {
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          processInputData();
+        }
+      });
 
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: "apply_status",
-            message: {
-              ticketNumber: getTextBoxElement,
-              status: getCheckedStatus
-            }
-          }
-        },
-        "*"
-      );
+    document.getElementById("btnApplyChanges").addEventListener("click", () => {
+      processInputData();
     });
+
+    processInputData = () => {
+      var getStatus = document.querySelector('input[name="status"]:checked');
+      var getTextBoxContent = document.getElementById("ticketNumberContainer")
+        .textContent;
+
+      if (getStatus != null) {
+        var getCheckedStatus = document.querySelector(
+          'input[name="status"]:checked'
+        ).value;
+      }
+
+      var pluginMessageObj = {
+        pluginMessage: {
+          type: "apply_status",
+          message: {
+            ticketNumber: getTextBoxContent,
+            status: getCheckedStatus
+          }
+        }
+      };
+
+      parent.postMessage(pluginMessageObj, "*");
+
+      //Clear contents after success
+    };
   </script>
 </body>
