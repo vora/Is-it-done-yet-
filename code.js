@@ -58,6 +58,10 @@ const generateStatus = (node, status, color, ticketNumber) => __awaiter(this, vo
     yield figma.loadFontAsync({ family: "Roboto", style: "Regular" });
     let textNode = figma.createText();
     let ellipseNode = figma.createEllipse();
+    const constraints = {
+        horizontal: "SCALE",
+        vertical: "SCALE"
+    };
     ellipseNode.resize(7, 7);
     ellipseNode.fills = [
         {
@@ -69,15 +73,17 @@ const generateStatus = (node, status, color, ticketNumber) => __awaiter(this, vo
             }
         }
     ];
+    ellipseNode.constraints = constraints;
     textNode.characters = status + " " + ticketNumber;
     textNode.fontSize = 9;
+    textNode.constraints = constraints;
     var coordinateObj = determineCoordinatesPosition(node, ellipseNode, textNode);
     ellipseNode.x = coordinateObj["ellipseNodeCoordinateX"];
     ellipseNode.y = coordinateObj["ellipseNodeCoordinateY"];
     textNode.x = coordinateObj["textNodeCoordianteX"];
     textNode.y = coordinateObj["textNodeCoordinateY"];
-    figma.currentPage.appendChild(ellipseNode);
-    figma.currentPage.appendChild(textNode);
+    // figma.currentPage.appendChild(ellipseNode);
+    // figma.currentPage.appendChild(textNode);
 });
 figma.ui.onmessage = (param) => {
     if (param.type === "apply_status") {

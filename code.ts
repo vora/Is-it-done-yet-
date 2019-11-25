@@ -88,6 +88,10 @@ const generateStatus = async (
   await figma.loadFontAsync({ family: "Roboto", style: "Regular" });
   let textNode = figma.createText();
   let ellipseNode = figma.createEllipse();
+  const constraints: Constraints = {
+    horizontal: "SCALE",
+    vertical: "SCALE"
+  };
 
   ellipseNode.resize(7, 7);
 
@@ -101,9 +105,11 @@ const generateStatus = async (
       }
     }
   ];
+  ellipseNode.constraints = constraints;
 
   textNode.characters = status + " " + ticketNumber;
   textNode.fontSize = 9;
+  textNode.constraints = constraints;
 
   var coordinateObj = determineCoordinatesPosition(node, ellipseNode, textNode);
 
@@ -113,8 +119,8 @@ const generateStatus = async (
   textNode.x = coordinateObj["textNodeCoordianteX"];
   textNode.y = coordinateObj["textNodeCoordinateY"];
 
-  figma.currentPage.appendChild(ellipseNode);
-  figma.currentPage.appendChild(textNode);
+  // figma.currentPage.appendChild(ellipseNode);
+  // figma.currentPage.appendChild(textNode);
 };
 
 figma.ui.onmessage = (param: IPluginMessage) => {
