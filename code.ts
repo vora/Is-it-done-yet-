@@ -137,11 +137,7 @@ figma.ui.onmessage = (param: IPluginMessage) => {
         );
 
         if (node.name) {
-          node.name =
-            "\uD83D\uDE42" +
-            param.message.status +
-            " " +
-            param.message.ticketNumber;
+          node.name = param.message.status + " " + param.message.ticketNumber;
         }
       }
     });

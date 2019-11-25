@@ -93,11 +93,7 @@ figma.ui.onmessage = (param) => {
                 var color = statusColors[param.message.status];
                 generateStatus(node, param.message.status, color, param.message.ticketNumber);
                 if (node.name) {
-                    node.name =
-                        "\uD83D\uDE42" +
-                            param.message.status +
-                            " " +
-                            param.message.ticketNumber;
+                    node.name = param.message.status + " " + param.message.ticketNumber;
                 }
             }
         });
