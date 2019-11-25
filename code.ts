@@ -71,7 +71,7 @@ const determineCoordinatesPosition = (
   var positionObj: INodeCoordinates = {
     ellipseNodeCoordinateX:
       node.x + node.width - textNode.width - ellipseNode.width - 1,
-    ellipseNodeCoordinateY: node.y - ellipseNode.height,
+    ellipseNodeCoordinateY: node.y - ellipseNode.height - 1.5,
     textNodeCoordianteX: node.x + node.width - textNode.width,
     textNodeCoordinateY: node.y - textNode.height
   };
@@ -148,4 +148,5 @@ figma.ui.onmessage = (param: IPluginMessage) => {
   }
 
   figma.closePlugin();
+  figma.notify("Status has been added for selected frames");
 };
