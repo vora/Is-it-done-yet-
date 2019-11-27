@@ -46,13 +46,19 @@ const setStatusColor = (statusType: StatusType) => {
 figma.showUI(__html__, iFrameProps);
 
 figma.ui.onmessage = (param: IPluginMessage) => {
+  var namePrefix =
+    setStatusColor(param.message.status) +
+    param.message.status +
+    " " +
+    param.message.ticketNumber;
+
   if (param.type === "apply_status") {
     figma.currentPage.selection.forEach(node => {
-      node.name =
-        setStatusColor(param.message.status) +
-        param.message.status +
-        " " +
-        param.message.ticketNumber;
+      if (node.name.startsWith("Frame")) {
+        node.name = namePrefix + " " + node.name;
+      } else {
+        node.name = namePrefix;
+      }
     });
   }
 
