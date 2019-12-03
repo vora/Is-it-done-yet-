@@ -35,7 +35,10 @@ const setNamePrefix = (param: IPluginMessage) => {
 
 const setUpdatedNamePrefix = (name: string, param: IPluginMessage) => {
   var splitName = name.split(" ");
-  splitName[0] = setStatusColor(param.message.status);
+
+  splitName[0] = param.message.status
+    ? setStatusColor(param.message.status)
+    : splitName[0];
 
   if (splitName[1] != "Needs") {
     splitName[1] = param.message.status;
