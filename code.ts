@@ -19,6 +19,47 @@ const iFrameProps: ShowUIOptions = {
   height: 300
 };
 
+const setNamePrefix = (param: IPluginMessage) => {
+  let ticketNumber = param.message.ticketNumber
+    ? " " + param.message.ticketNumber
+    : "";
+
+  let namePrefix =
+    setStatusColor(param.message.status) +
+    " " +
+    param.message.status +
+    ticketNumber;
+
+  return namePrefix;
+};
+
+const setUpdatedNamePrefix = (name: string, param: IPluginMessage) => {
+  var splitName = name.split(" ");
+  splitName[0] = setStatusColor(param.message.status);
+
+  if (splitName[1] != "Needs") {
+    splitName[1] = param.message.status;
+  } else {
+    splitName[1] = param.message.status;
+    splitName.splice(2, 1);
+  }
+
+  var updatedName = splitName.join(" ");
+  return updatedName;
+};
+
+const determineIfStatusSet = (name: string) => {
+  if (
+    name.includes("Active") ||
+    name.includes("Approved") ||
+    name.includes("In-development") ||
+    name.includes("In-review") ||
+    name.includes("Needs changes")
+  ) {
+    return true;
+  } else return false;
+};
+
 const setStatusColor = (statusType: StatusType) => {
   var emojiHex: string = "";
 
@@ -46,18 +87,12 @@ const setStatusColor = (statusType: StatusType) => {
 figma.showUI(__html__, iFrameProps);
 
 figma.ui.onmessage = (param: IPluginMessage) => {
-  var namePrefix =
-    setStatusColor(param.message.status) +
-    param.message.status +
-    " " +
-    param.message.ticketNumber;
-
   if (param.type === "apply_status") {
     figma.currentPage.selection.forEach(node => {
-      if (node.name.startsWith("Frame")) {
-        node.name = namePrefix + " " + node.name;
+      if (!determineIfStatusSet(node.name)) {
+        node.name = setNamePrefix(param) + " " + node.name;
       } else {
-        node.name = namePrefix;
+        node.name = setUpdatedNamePrefix(node.name, param);
       }
     });
   }
