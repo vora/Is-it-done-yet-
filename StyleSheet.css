@@ -3,16 +3,21 @@
   align-items: center;
   justify-content: space-between;
   height: 35px;
-  max-width: 235px;
+  max-width: 250px;
 }
 
 .outerBox {
-  max-width: 240px;
+  max-width: 260px;
+}
+
+.outerBox:first-child {
+  margin-top: 15px;
 }
 
 .inner-box {
   display: flex;
   justify-content: left;
+  margin-left: 10px;
 }
 
 .btnClass {
@@ -67,7 +72,7 @@
 
 .radioContainer .psuedoRadio:after {
   top: 8px;
-  left: 7px;
+  left: 7.4px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -114,8 +119,7 @@ label {
   background-color: #f0efef;
   margin-top: 15px;
 
-  border: 0.5px solid;
-  border-radius: 3px;
+  border-radius: 3px 0 0 3px;
 
   padding: 7px 4px;
 }
@@ -123,6 +127,16 @@ label {
 #inputContainer {
   display: flex;
   max-width: 235px;
+  margin-left: 15px;
+}
+
+#btnApplyChanges {
+  border: 2px solid #18a0fb;
+  font-weight: bold;
+  background-color: #18a0fb;
+  color: #ffffff;
+  display: block;
+  margin: 10px 0px 15px 15px;
 }
 
 #btnCancel {
@@ -133,7 +147,7 @@ label {
   margin-top: 15px;
 
   border: 2px solid #18a0fb;
-  border-radius: 3px;
+  border-radius: 0 3px 3px 0;
 
   color: #18a0fb;
   background-color: #ffffff;
@@ -152,38 +166,22 @@ label {
   display: block;
 }
 
-#btnApplyChanges {
-  border: 2px solid #18a0fb;
-  font-weight: bold;
-  background-color: #18a0fb;
-  color: #ffffff;
-  display: block;
-}
-
-#btnCancelChanges {
-  border: 2px solid #f0544e;
-  font-weight: bold;
-  background-color: #f0544e;
-  color: #ffffff;
-  display: none;
-}
-
 #circle-active {
-  fill: #18a0fb;
+  fill: #0379d8;
 }
 
 #circle-review {
-  fill: #ffc700;
+  fill: #ffec0f;
 }
 
 #circle-change {
-  fill: #f24822;
+  fill: #e51224;
 }
 
 #circle-approved {
-  fill: #1bc47d;
+  fill: #2bc01d;
 }
 
 #circle-dev {
-  fill: #ff00ff;
+  fill: #896cde;
 }

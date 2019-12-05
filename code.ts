@@ -21,8 +21,8 @@ interface IFrameNodeData {
 }
 
 const iFrameWindowDimensions: ShowUIOptions = {
-  width: 260,
-  height: 300
+  width: 280,
+  height: 310
 };
 
 const setFrameNodeNameFunc = (param: IPluginMessage) => {
@@ -31,7 +31,7 @@ const setFrameNodeNameFunc = (param: IPluginMessage) => {
     : "";
 
   let namePrefix =
-    setStatusColor(param.message.status) +
+    setStatusColorFunc(param.message.status) +
     " " +
     param.message.status +
     ticketNumber;
@@ -60,7 +60,7 @@ const updateFrameNodeNameFunc = (
 
     if (param.message.ticketNumber.length == 0) {
       newNodeName =
-        setStatusColor(param.message.status) +
+        setStatusColorFunc(param.message.status) +
         " " +
         param.message.status +
         " " +
@@ -77,7 +77,7 @@ const updateFrameNodeNameFunc = (
       });
     } else {
       newNodeName =
-        setStatusColor(param.message.status) +
+        setStatusColorFunc(param.message.status) +
         " " +
         param.message.status +
         " " +
@@ -101,7 +101,7 @@ const updateFrameNodeNameFunc = (
 
     if (param.message.ticketNumber.length == 0) {
       newNodeName =
-        setStatusColor(param.message.status) +
+        setStatusColorFunc(param.message.status) +
         " " +
         param.message.status +
         " " +
@@ -113,7 +113,7 @@ const updateFrameNodeNameFunc = (
       );
     } else {
       newNodeName =
-        setStatusColor(param.message.status) +
+        setStatusColorFunc(param.message.status) +
         " " +
         param.message.status +
         " " +
@@ -142,7 +142,7 @@ const setFrameNodePluginDataFunc = (name: string, param: IPluginMessage) => {
   return frameData;
 };
 
-const setStatusColor = (statusType: StatusType) => {
+const setStatusColorFunc = (statusType: StatusType) => {
   var emojiHex: string = "";
 
   switch (statusType) {
@@ -166,13 +166,30 @@ const setStatusColor = (statusType: StatusType) => {
   return emojiHex;
 };
 
+const selectFrameAlert =
+  "Kindly select a frame that you'd like to apply the status for";
+const selectStatusAlert =
+  "Kindly select a status that you'd like to update the frame with";
+const statusSuccessNotification =
+  "Status updated for selected frames successfully";
+
 figma.showUI(__html__, iFrameWindowDimensions);
 
 figma.ui.onmessage = (param: IPluginMessage) => {
+  if (figma.currentPage.selection.length == 0) {
+    alert(selectFrameAlert);
+    figma.closePlugin();
+    return false;
+  }
+
+  if (param.message.status == null) {
+    alert(selectStatusAlert);
+    return false;
+  }
+
   if (param.type === "apply_status") {
     figma.currentPage.selection.forEach(node => {
       var nodePluginData = node.getPluginData(node.id);
-
       if (nodePluginData.length == 0) {
         node.setPluginData(
           node.id,
@@ -183,8 +200,8 @@ figma.ui.onmessage = (param: IPluginMessage) => {
         node.name = updateFrameNodeNameFunc(nodePluginData, node, param);
       }
     });
-  }
 
-  figma.closePlugin();
-  figma.notify("Status updated for selected frames successfully");
+    figma.closePlugin();
+    figma.notify(statusSuccessNotification);
+  }
 };
