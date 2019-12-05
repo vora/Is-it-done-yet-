@@ -50,7 +50,7 @@ const updateFrameNodeData = (frameNodeInformation, node, param) => {
     var parsedFrameData = JSON.parse(frameNodeInformation);
     let ticketNumber = parsedFrameData.ticketNumber;
     var newNodeName;
-    console.log(parsedFrameData);
+    let frameNodeData;
     //What are the different conditions
     //We have the frameName Information that was previously set
     //We need to extact only name and ticketNumber from that parsedData
@@ -63,16 +63,14 @@ const updateFrameNodeData = (frameNodeInformation, node, param) => {
     //(2) Then we need to extract the name from node.name by splicing first and second element of the split array
     //(2) Then from the param object, we get the new status and ticketNumber (since ticketNumber was originally null, we just have to update)
     //(2) We now have status, ticketNumber and the originalName - we combine all of this, setPluginData and return newName
-    if (ticketNumber != null) {
+    if (ticketNumber != "") {
         let splitNodeName = node.name.split(" ");
-        console.log("Before split", splitNodeName);
         if (splitNodeName[1] != "Needs") {
             splitNodeName.splice(0, 3);
         }
         else {
             splitNodeName.splice(0, 4);
         }
-        console.log("Printing name", splitNodeName);
         if (param.message.ticketNumber.length == 0) {
             newNodeName =
                 setStatusColor(param.message.status) +
@@ -82,7 +80,7 @@ const updateFrameNodeData = (frameNodeInformation, node, param) => {
                     ticketNumber +
                     " " +
                     splitNodeName.join(" ");
-            setFrameNodeData(splitNodeName.join(" "), {
+            frameNodeData = setFrameNodeData(splitNodeName.join(" "), {
                 type: param.type,
                 message: {
                     status: param.message.status,
@@ -91,6 +89,10 @@ const updateFrameNodeData = (frameNodeInformation, node, param) => {
             });
         }
         else {
+            console.log("In here");
+            console.log("Param", param);
+            console.log("PluginData", parsedFrameData);
+            console.log("SplitNodeName", splitNodeName);
             newNodeName =
                 setStatusColor(param.message.status) +
                     " " +
@@ -99,21 +101,17 @@ const updateFrameNodeData = (frameNodeInformation, node, param) => {
                     param.message.ticketNumber +
                     " " +
                     splitNodeName.join(" ");
-            setFrameNodeData(splitNodeName.join(" "), param);
+            frameNodeData = setFrameNodeData(splitNodeName.join(" "), param);
         }
-        console.log("Updated Name", newNodeName);
-        return newNodeName;
     }
     else {
         let splitNodeName = node.name.split(" ");
-        console.log("Before split No TN", splitNodeName);
         if (splitNodeName[1] != "Needs") {
             splitNodeName.splice(0, 2);
         }
         else {
             splitNodeName.splice(0, 3);
         }
-        console.log("Printing name No TN", splitNodeName);
         if (param.message.ticketNumber.length == 0) {
             newNodeName =
                 setStatusColor(param.message.status) +
@@ -121,11 +119,9 @@ const updateFrameNodeData = (frameNodeInformation, node, param) => {
                     param.message.status +
                     " " +
                     splitNodeName.join(" ");
-            setFrameNodeData(splitNodeName.join(" "), param);
+            frameNodeData = setFrameNodeData(splitNodeName.join(" "), param);
         }
         else {
-            console.log("Here");
-            console.log(param);
             newNodeName =
                 setStatusColor(param.message.status) +
                     " " +
@@ -134,11 +130,11 @@ const updateFrameNodeData = (frameNodeInformation, node, param) => {
                     param.message.ticketNumber +
                     " " +
                     splitNodeName.join(" ");
-            setFrameNodeData(splitNodeName.join(" "), param);
+            frameNodeData = setFrameNodeData(splitNodeName.join(" "), param);
         }
-        console.log("Updated Name No TN", newNodeName);
-        return newNodeName;
     }
+    node.setPluginData(node.id, JSON.stringify(frameNodeData));
+    return newNodeName;
 };
 const setStatusColor = (statusType) => {
     var emojiHex = "";
@@ -166,6 +162,7 @@ figma.ui.onmessage = (param) => {
     if (param.type === "apply_status") {
         figma.currentPage.selection.forEach(node => {
             var nodePluginData = node.getPluginData(node.id);
+            console.log("Retrieved Data", nodePluginData);
             if (nodePluginData.length == 0) {
                 node.setPluginData(node.id, JSON.stringify(setFrameNodeData(node.name, param)));
                 node.name = setNamePrefix(param) + " " + node.name;
