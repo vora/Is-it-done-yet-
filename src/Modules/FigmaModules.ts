@@ -1,31 +1,10 @@
-type StatusType =
-  | "Active"
-  | "In-review"
-  | "Needs changes"
-  | "Approved"
-  | "In-development";
+import {
+  IFrameNodeData,
+  IPluginMessage,
+  StatusType
+} from "../Interfaces/FigmaInterface";
 
-interface IMessageType {
-  ticketNumber: string;
-  status: StatusType;
-}
-interface IPluginMessage {
-  type: string;
-  message: IMessageType;
-}
-
-interface IFrameNodeData {
-  status: StatusType;
-  ticketNumber?: string;
-  frameName: string;
-}
-
-const iFrameWindowDimensions: ShowUIOptions = {
-  width: 280,
-  height: 310
-};
-
-const setFrameNodeNameFunc = (param: IPluginMessage) => {
+export const setFrameNodeNameFunc = (param: IPluginMessage) => {
   let ticketNumber = param.message.ticketNumber
     ? " " + param.message.ticketNumber
     : "";
@@ -39,7 +18,7 @@ const setFrameNodeNameFunc = (param: IPluginMessage) => {
   return namePrefix;
 };
 
-const updateFrameNodeNameFunc = (
+export const updateFrameNodeNameFunc = (
   frameNodeInformation: string,
   node: SceneNode,
   param: IPluginMessage
@@ -132,7 +111,10 @@ const updateFrameNodeNameFunc = (
   return newNodeName;
 };
 
-const setFrameNodePluginDataFunc = (name: string, param: IPluginMessage) => {
+export const setFrameNodePluginDataFunc = (
+  name: string,
+  param: IPluginMessage
+) => {
   const frameData: IFrameNodeData = {
     ticketNumber: param.message.ticketNumber ? param.message.ticketNumber : "",
     status: param.message.status ? param.message.status : null,
@@ -142,7 +124,7 @@ const setFrameNodePluginDataFunc = (name: string, param: IPluginMessage) => {
   return frameData;
 };
 
-const setStatusColorFunc = (statusType: StatusType) => {
+export const setStatusColorFunc = (statusType: StatusType) => {
   var emojiHex: string = "";
 
   switch (statusType) {
@@ -164,44 +146,4 @@ const setStatusColorFunc = (statusType: StatusType) => {
   }
 
   return emojiHex;
-};
-
-const selectFrameAlert =
-  "Kindly select a frame that you'd like to apply the status for";
-const selectStatusAlert =
-  "Kindly select a status that you'd like to update the frame with";
-const statusSuccessNotification =
-  "Status updated for selected frames successfully";
-
-figma.showUI(__html__, iFrameWindowDimensions);
-
-figma.ui.onmessage = (param: IPluginMessage) => {
-  if (figma.currentPage.selection.length == 0) {
-    alert(selectFrameAlert);
-    figma.closePlugin();
-    return false;
-  }
-
-  if (param.message.status == null) {
-    alert(selectStatusAlert);
-    return false;
-  }
-
-  if (param.type === "apply_status") {
-    figma.currentPage.selection.forEach(node => {
-      var nodePluginData = node.getPluginData(node.id);
-      if (nodePluginData.length == 0) {
-        node.setPluginData(
-          node.id,
-          JSON.stringify(setFrameNodePluginDataFunc(node.name, param))
-        );
-        node.name = setFrameNodeNameFunc(param) + " " + node.name;
-      } else {
-        node.name = updateFrameNodeNameFunc(nodePluginData, node, param);
-      }
-    });
-
-    figma.closePlugin();
-    figma.notify(statusSuccessNotification);
-  }
 };

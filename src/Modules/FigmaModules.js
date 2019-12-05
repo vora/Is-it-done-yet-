@@ -1,8 +1,4 @@
-const iFrameWindowDimensions = {
-    width: 280,
-    height: 310
-};
-const setFrameNodeNameFunc = (param) => {
+export const setFrameNodeNameFunc = (param) => {
     let ticketNumber = param.message.ticketNumber
         ? " " + param.message.ticketNumber
         : "";
@@ -12,7 +8,7 @@ const setFrameNodeNameFunc = (param) => {
         ticketNumber;
     return namePrefix;
 };
-const updateFrameNodeNameFunc = (frameNodeInformation, node, param) => {
+export const updateFrameNodeNameFunc = (frameNodeInformation, node, param) => {
     var parsedFrameData = JSON.parse(frameNodeInformation);
     let ticketNumber = parsedFrameData.ticketNumber;
     var newNodeName;
@@ -86,7 +82,7 @@ const updateFrameNodeNameFunc = (frameNodeInformation, node, param) => {
     node.setPluginData(node.id, JSON.stringify(frameNodeData));
     return newNodeName;
 };
-const setFrameNodePluginDataFunc = (name, param) => {
+export const setFrameNodePluginDataFunc = (name, param) => {
     const frameData = {
         ticketNumber: param.message.ticketNumber ? param.message.ticketNumber : "",
         status: param.message.status ? param.message.status : null,
@@ -94,7 +90,7 @@ const setFrameNodePluginDataFunc = (name, param) => {
     };
     return frameData;
 };
-const setStatusColorFunc = (statusType) => {
+export const setStatusColorFunc = (statusType) => {
     var emojiHex = "";
     switch (statusType) {
         case "Active":
@@ -114,33 +110,4 @@ const setStatusColorFunc = (statusType) => {
             break;
     }
     return emojiHex;
-};
-const selectFrameAlert = "Kindly select a frame that you'd like to apply the status for";
-const selectStatusAlert = "Kindly select a status that you'd like to update the frame with";
-const statusSuccessNotification = "Status updated for selected frames successfully";
-figma.showUI(__html__, iFrameWindowDimensions);
-figma.ui.onmessage = (param) => {
-    if (figma.currentPage.selection.length == 0) {
-        alert(selectFrameAlert);
-        figma.closePlugin();
-        return false;
-    }
-    if (param.message.status == null) {
-        alert(selectStatusAlert);
-        return false;
-    }
-    if (param.type === "apply_status") {
-        figma.currentPage.selection.forEach(node => {
-            var nodePluginData = node.getPluginData(node.id);
-            if (nodePluginData.length == 0) {
-                node.setPluginData(node.id, JSON.stringify(setFrameNodePluginDataFunc(node.name, param)));
-                node.name = setFrameNodeNameFunc(param) + " " + node.name;
-            }
-            else {
-                node.name = updateFrameNodeNameFunc(nodePluginData, node, param);
-            }
-        });
-        figma.closePlugin();
-        figma.notify(statusSuccessNotification);
-    }
 };
