@@ -1,5 +1,5 @@
 <head>
-  <link rel="stylesheet" type="text/css" href="./StyleSheet.css" />
+  <link rel="stylesheet" type="text/css" href="./StyleSheet1.css" />
 </head>
 
 <div id="status-form">
@@ -7,7 +7,14 @@
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
-          <circle id="circle-active" cx="10" cy="10" r="6" />
+          <circle
+            id="circle-active"
+            stroke="black"
+            stroke-width="0.8"
+            cx="10"
+            cy="10"
+            r="6"
+          />
         </svg>
         <label>
           Active
@@ -26,7 +33,14 @@
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
-          <circle id="circle-review" cx="10" cy="10" r="6" />
+          <circle
+            id="circle-review"
+            stroke="black"
+            stroke-width="0.8"
+            cx="10"
+            cy="10"
+            r="6"
+          />
         </svg>
         <label>
           In-review
@@ -50,7 +64,14 @@
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
-          <circle id="circle-change" cx="10" cy="10" r="6" />
+          <circle
+            id="circle-change"
+            stroke="black"
+            stroke-width="0.8"
+            cx="10"
+            cy="10"
+            r="6"
+          />
         </svg>
         <label>Needs Changes</label>
       </div>
@@ -72,7 +93,14 @@
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
-          <circle id="circle-approved" cx="10" cy="10" r="6" />
+          <circle
+            id="circle-approved"
+            stroke="black"
+            stroke-width="0.8"
+            cx="10"
+            cy="10"
+            r="6"
+          />
         </svg>
         <label>Approved</label>
       </div>
@@ -94,7 +122,14 @@
     <div class="box">
       <div class="inner-box">
         <svg height="20" width="20">
-          <circle id="circle-dev" cx="10" cy="10" r="6" />
+          <circle
+            id="circle-dev"
+            stroke="black"
+            stroke-width="0.8"
+            cx="10"
+            cy="10"
+            r="6"
+          />
         </svg>
         <label>In-development</label>
       </div>
@@ -116,7 +151,7 @@
     <div contenteditable="true" id="ticketNumberContainer"></div>
     <button id="btnCancel" type="button">x</button>
     <button class="btnClass" id="btnAddTicket">
-      + Add ticket number(s)
+      + Add ticket number
     </button>
   </div>
 
@@ -157,6 +192,10 @@
           e.preventDefault();
           processInputData();
         }
+
+        if (e.keyCode == 32) {
+          e.preventDefault();
+        }
       });
 
     document.getElementById("btnApplyChanges").addEventListener("click", () => {
@@ -172,6 +211,8 @@
         var getCheckedStatus = document.querySelector(
           'input[name="status"]:checked'
         ).value;
+      } else {
+        getCheckedStatus = null;
       }
 
       var pluginMessageObj = {

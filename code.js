@@ -1,44 +1,100 @@
-const iFrameProps = {
-    width: 260,
-    height: 300
+const iFrameWindowDimensions = {
+    width: 280,
+    height: 310
 };
-const setNamePrefix = (param) => {
+const setFrameNodeNameFunc = (param) => {
     let ticketNumber = param.message.ticketNumber
         ? " " + param.message.ticketNumber
         : "";
-    let namePrefix = setStatusColor(param.message.status) +
+    let namePrefix = setStatusColorFunc(param.message.status) +
         " " +
         param.message.status +
         ticketNumber;
     return namePrefix;
 };
-const setUpdatedNamePrefix = (name, param) => {
-    var splitName = name.split(" ");
-    splitName[0] = param.message.status
-        ? setStatusColor(param.message.status)
-        : splitName[0];
-    if (splitName[1] != "Needs") {
-        splitName[1] = param.message.status;
+const updateFrameNodeNameFunc = (frameNodeInformation, node, param) => {
+    var parsedFrameData = JSON.parse(frameNodeInformation);
+    let ticketNumber = parsedFrameData.ticketNumber;
+    var newNodeName;
+    let frameNodeData;
+    if (ticketNumber != "") {
+        let splitNodeName = node.name.split(" ");
+        if (splitNodeName[1] != "Needs") {
+            splitNodeName.splice(0, 3);
+        }
+        else {
+            splitNodeName.splice(0, 4);
+        }
+        if (param.message.ticketNumber.length == 0) {
+            newNodeName =
+                setStatusColorFunc(param.message.status) +
+                    " " +
+                    param.message.status +
+                    " " +
+                    ticketNumber +
+                    " " +
+                    splitNodeName.join(" ");
+            frameNodeData = setFrameNodePluginDataFunc(splitNodeName.join(" "), {
+                type: param.type,
+                message: {
+                    status: param.message.status,
+                    ticketNumber: ticketNumber
+                }
+            });
+        }
+        else {
+            newNodeName =
+                setStatusColorFunc(param.message.status) +
+                    " " +
+                    param.message.status +
+                    " " +
+                    param.message.ticketNumber +
+                    " " +
+                    splitNodeName.join(" ");
+            frameNodeData = setFrameNodePluginDataFunc(splitNodeName.join(" "), param);
+        }
     }
     else {
-        splitName[1] = param.message.status;
-        splitName.splice(2, 1);
+        let splitNodeName = node.name.split(" ");
+        if (splitNodeName[1] != "Needs") {
+            splitNodeName.splice(0, 2);
+        }
+        else {
+            splitNodeName.splice(0, 3);
+        }
+        if (param.message.ticketNumber.length == 0) {
+            newNodeName =
+                setStatusColorFunc(param.message.status) +
+                    " " +
+                    param.message.status +
+                    " " +
+                    splitNodeName.join(" ");
+            frameNodeData = setFrameNodePluginDataFunc(splitNodeName.join(" "), param);
+        }
+        else {
+            newNodeName =
+                setStatusColorFunc(param.message.status) +
+                    " " +
+                    param.message.status +
+                    " " +
+                    param.message.ticketNumber +
+                    " " +
+                    splitNodeName.join(" ");
+            frameNodeData = setFrameNodePluginDataFunc(splitNodeName.join(" "), param);
+        }
     }
-    var updatedName = splitName.join(" ");
-    return updatedName;
+    node.setPluginData(node.id, JSON.stringify(frameNodeData));
+    return newNodeName;
 };
-const determineIfStatusSet = (name) => {
-    if (name.includes("Active") ||
-        name.includes("Approved") ||
-        name.includes("In-development") ||
-        name.includes("In-review") ||
-        name.includes("Needs changes")) {
-        return true;
-    }
-    else
-        return false;
+const setFrameNodePluginDataFunc = (name, param) => {
+    const frameData = {
+        ticketNumber: param.message.ticketNumber ? param.message.ticketNumber : "",
+        status: param.message.status ? param.message.status : null,
+        frameName: name
+    };
+    return frameData;
 };
-const setStatusColor = (statusType) => {
+const setStatusColorFunc = (statusType) => {
     var emojiHex = "";
     switch (statusType) {
         case "Active":
@@ -59,18 +115,32 @@ const setStatusColor = (statusType) => {
     }
     return emojiHex;
 };
-figma.showUI(__html__, iFrameProps);
+const selectFrameAlert = "Kindly select a frame that you'd like to apply the status for";
+const selectStatusAlert = "Kindly select a status that you'd like to update the frame with";
+const statusSuccessNotification = "Status updated for selected frames successfully";
+figma.showUI(__html__, iFrameWindowDimensions);
 figma.ui.onmessage = (param) => {
+    if (figma.currentPage.selection.length == 0) {
+        alert(selectFrameAlert);
+        figma.closePlugin();
+        return false;
+    }
+    if (param.message.status == null) {
+        alert(selectStatusAlert);
+        return false;
+    }
     if (param.type === "apply_status") {
         figma.currentPage.selection.forEach(node => {
-            if (!determineIfStatusSet(node.name)) {
-                node.name = setNamePrefix(param) + " " + node.name;
+            var nodePluginData = node.getPluginData(node.id);
+            if (nodePluginData.length == 0) {
+                node.setPluginData(node.id, JSON.stringify(setFrameNodePluginDataFunc(node.name, param)));
+                node.name = setFrameNodeNameFunc(param) + " " + node.name;
             }
             else {
-                node.name = setUpdatedNamePrefix(node.name, param);
+                node.name = updateFrameNodeNameFunc(nodePluginData, node, param);
             }
         });
+        figma.closePlugin();
+        figma.notify(statusSuccessNotification);
     }
-    figma.closePlugin();
-    figma.notify("Status updated for selected frames successfully");
 };
