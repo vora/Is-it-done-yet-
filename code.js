@@ -115,9 +115,9 @@ const setStatusColorFunc = (statusType) => {
     }
     return emojiHex;
 };
-const selectFrameAlert = "Kindly select a frame that you'd like to apply the status for";
-const selectStatusAlert = "Kindly select a status that you'd like to update the frame with";
-const statusSuccessNotification = "Status updated for selected frames successfully";
+const selectFrameAlert = "Select a frame or multiple frames to apply the status to";
+const selectStatusAlert = "Select a status to apply to selected frame(s)";
+const statusSuccessNotification = "Successfully updated status for selected frame(s)";
 figma.showUI(__html__, iFrameWindowDimensions);
 figma.ui.onmessage = (param) => {
     if (figma.currentPage.selection.length == 0) {

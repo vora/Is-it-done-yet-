@@ -167,11 +167,10 @@ const setStatusColorFunc = (statusType: StatusType) => {
 };
 
 const selectFrameAlert =
-  "Kindly select a frame that you'd like to apply the status for";
-const selectStatusAlert =
-  "Kindly select a status that you'd like to update the frame with";
+  "Select a frame or multiple frames to apply the status to";
+const selectStatusAlert = "Select a status to apply to selected frame(s)";
 const statusSuccessNotification =
-  "Status updated for selected frames successfully";
+  "Successfully updated status for selected frame(s)";
 
 figma.showUI(__html__, iFrameWindowDimensions);
 
