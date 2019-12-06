@@ -1,3 +1,5 @@
+import "./StyleSheets/FigmaStyleSheet.css";
+
 var getAddTicketButton = document.getElementById("btnAddTicket");
 var getCancelButton = document.getElementById("btnCancel");
 var getTextBoxElement = document.getElementById("ticketNumberContainer");
@@ -46,9 +48,7 @@ processInputData = () => {
     .textContent;
 
   if (getStatus != null) {
-    var getCheckedStatus = document.querySelector(
-      'input[name="status"]:checked'
-    ).value;
+    getStatus.value;
   } else {
     getCheckedStatus = null;
   }
