@@ -1,7 +1,7 @@
 var getAddTicketButton = document.getElementById("btnAddTicket");
 var getCancelButton = document.getElementById("btnCancel");
 var getTextBoxElement = document.getElementById("ticketNumberContainer");
-var getOuterBoxElements = document.getElementsByClassName("outerBox");
+var getBoxElements = document.getElementsByClassName("box");
 var getRadioContainerElements = document.getElementsByClassName(
   "radioContainer"
 );
@@ -21,10 +21,10 @@ getCancelButton.addEventListener("click", () => {
 
 [...getRadioContainerElements].forEach(element => {
   element.addEventListener("click", () => {
-    for (let node of getOuterBoxElements) {
+    for (let node of getBoxElements) {
       node.style.backgroundColor = "";
     }
-    element.parentNode.parentNode.style.backgroundColor = "#ddf1ff";
+    element.parentNode.style.backgroundColor = "#ddf1ff";
   });
 });
 
