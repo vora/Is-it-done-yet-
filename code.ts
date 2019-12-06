@@ -22,7 +22,7 @@ interface IFrameNodeData {
 
 const iFrameWindowDimensions: ShowUIOptions = {
   width: 280,
-  height: 310
+  height: 340
 };
 
 const setFrameNodeNameFunc = (param: IPluginMessage) => {

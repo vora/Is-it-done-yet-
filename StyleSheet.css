@@ -156,11 +156,26 @@ label {
   cursor: pointer;
 }
 
-#btnAddTicket {
-  border: 2px solid #18a0fb;
-  background-color: #ffffff;
+#buttonContainer {
+  margin-top: 15px;
+  padding-left: 15px;
+}
+
+#spanDisplayAddSign {
   color: #18a0fb;
-  display: block;
+
+  font-weight: bold;
+}
+
+#btnAddTicket {
+  color: #18a0fb;
+  cursor: pointer;
+
+  border: none;
+  background: none;
+
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
 }
 
 #circle-active {

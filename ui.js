@@ -2,6 +2,8 @@ var getAddTicketButton = document.getElementById("btnAddTicket");
 var getCancelButton = document.getElementById("btnCancel");
 var getTextBoxElement = document.getElementById("ticketNumberContainer");
 var getBoxElements = document.getElementsByClassName("box");
+var getAddSign = document.getElementById("spanDisplayAddSign");
+var getInputButtonContainer = document.getElementById("buttonContainer");
 var getRadioContainerElements = document.getElementsByClassName(
   "radioContainer"
 );
@@ -9,13 +11,15 @@ var getRadioContainerElements = document.getElementsByClassName(
 getAddTicketButton.addEventListener("click", () => {
   getTextBoxElement.style.display = "block";
   getCancelButton.style.display = "block";
-  getAddTicketButton.style.display = "none";
+  getAddSign.style.display = "none";
+  getInputButtonContainer.style.paddingLeft = "9px";
 });
 
 getCancelButton.addEventListener("click", () => {
   getTextBoxElement.style.display = "none";
   getCancelButton.style.display = "none";
-  getAddTicketButton.style.display = "block";
+  getAddSign.style.display = "inline";
+  getInputButtonContainer.style.paddingLeft = "15px";
   document.getElementById("ticketNumberContainer").textContent = "";
 });
 
