@@ -178,6 +178,10 @@ label {
   font-family: "Roboto", sans-serif;
 }
 
+#btnAddTicket:focus {
+  outline: none;
+}
+
 #circle-active {
   fill: #0379d8;
 }

@@ -13,6 +13,15 @@ getAddTicketButton.addEventListener("click", () => {
   getCancelButton.style.display = "block";
   getAddSign.style.display = "none";
   getInputButtonContainer.style.paddingLeft = "9px";
+  var pluginMessageObj = {
+    pluginMessage: {
+      type: "resize_window",
+      message: {
+        resizeWindow: true
+      }
+    }
+  };
+  parent.postMessage(pluginMessageObj, "*");
 });
 
 getCancelButton.addEventListener("click", () => {
@@ -21,6 +30,15 @@ getCancelButton.addEventListener("click", () => {
   getAddSign.style.display = "inline";
   getInputButtonContainer.style.paddingLeft = "15px";
   document.getElementById("ticketNumberContainer").textContent = "";
+  var pluginMessageObj = {
+    pluginMessage: {
+      type: "resize_window",
+      message: {
+        resizeWindow: false
+      }
+    }
+  };
+  parent.postMessage(pluginMessageObj, "*");
 });
 
 [...getRadioContainerElements].forEach(element => {

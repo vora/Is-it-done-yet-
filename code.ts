@@ -8,6 +8,7 @@ type StatusType =
 interface IMessageType {
   ticketNumber: string;
   status: StatusType;
+  resizeWindow?: boolean;
 }
 interface IPluginMessage {
   type: string;
@@ -22,7 +23,7 @@ interface IFrameNodeData {
 
 const iFrameWindowDimensions: ShowUIOptions = {
   width: 280,
-  height: 340
+  height: 300
 };
 
 const setFrameNodeNameFunc = (param: IPluginMessage) => {
@@ -175,18 +176,26 @@ const statusSuccessNotification =
 figma.showUI(__html__, iFrameWindowDimensions);
 
 figma.ui.onmessage = (param: IPluginMessage) => {
-  if (figma.currentPage.selection.length == 0) {
-    alert(selectFrameAlert);
-    figma.closePlugin();
-    return false;
-  }
-
-  if (param.message.status == null) {
-    alert(selectStatusAlert);
-    return false;
+  if (param.type == "resize_window") {
+    if (param.message.resizeWindow == true) {
+      figma.ui.resize(280, 340);
+    } else {
+      figma.ui.resize(280, 300);
+    }
   }
 
   if (param.type === "apply_status") {
+    if (figma.currentPage.selection.length == 0) {
+      alert(selectFrameAlert);
+      figma.closePlugin();
+      return;
+    }
+
+    if (param.message.status == null) {
+      alert(selectStatusAlert);
+      return;
+    }
+
     figma.currentPage.selection.forEach(node => {
       var nodePluginData = node.getPluginData(node.id);
       if (nodePluginData.length == 0) {
