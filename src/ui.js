@@ -1,3 +1,5 @@
+import "./StyleSheet.css";
+
 var getAddTicketButton = document.getElementById("btnAddTicket");
 var getCancelButton = document.getElementById("btnCancel");
 var getTextBoxElement = document.getElementById("ticketNumberContainer");
@@ -67,7 +69,7 @@ document.getElementById("btnApplyChanges").addEventListener("click", () => {
   processInputData();
 });
 
-processInputData = () => {
+const processInputData = () => {
   var getStatus = document.querySelector('input[name="status"]:checked');
   var getTextBoxContent = document.getElementById("ticketNumberContainer")
     .textContent;

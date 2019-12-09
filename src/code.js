@@ -1,4 +1,4 @@
-import { setFrameNodeNameFunc, setFrameNodePluginDataFunc, updateFrameNodeNameFunc } from "./src/Modules/PluginModules";
+import { setFrameNodeNameFunc, setFrameNodePluginDataFunc, updateFrameNodeNameFunc } from "./Modules/PluginModules";
 const iFrameWindowDimensions = {
     width: 280,
     height: 310

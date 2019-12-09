@@ -1,10 +1,10 @@
-import { IPluginMessage } from "./src/Interfaces/PluginInterface";
+import { IPluginMessage } from "./Interfaces/PluginInterface";
 
 import {
   setFrameNodeNameFunc,
   setFrameNodePluginDataFunc,
   updateFrameNodeNameFunc
-} from "./src/Modules/PluginModules";
+} from "./Modules/PluginModules";
 
 const iFrameWindowDimensions: ShowUIOptions = {
   width: 280,
