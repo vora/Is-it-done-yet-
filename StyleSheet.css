@@ -4,20 +4,16 @@
   justify-content: space-between;
   height: 35px;
   max-width: 250px;
+  padding: 0px 10px 0px 10px;
 }
 
-.outerBox {
-  max-width: 260px;
-}
-
-.outerBox:first-child {
+.box:first-child {
   margin-top: 15px;
 }
 
 .inner-box {
   display: flex;
   justify-content: left;
-  margin-left: 10px;
 }
 
 .btnClass {
@@ -50,7 +46,7 @@
 }
 
 .radioContainer input {
-  opacity: 0;
+  display: none;
   cursor: pointer;
   height: 0;
   width: 0;
@@ -79,7 +75,7 @@
   background: #6c6c6c;
 }
 
-.outerBox:hover {
+.box:hover {
   background-color: #ddf1ff;
 }
 
@@ -105,6 +101,7 @@ label {
   overflow: hidden;
   text-overflow: inherit;
 }
+
 #ticketNumberContainer {
   display: none;
 
@@ -159,11 +156,30 @@ label {
   cursor: pointer;
 }
 
-#btnAddTicket {
-  border: 2px solid #18a0fb;
-  background-color: #ffffff;
+#buttonContainer {
+  margin-top: 15px;
+  padding-left: 15px;
+}
+
+#spanDisplayAddSign {
   color: #18a0fb;
-  display: block;
+
+  font-weight: bold;
+}
+
+#btnAddTicket {
+  color: #18a0fb;
+  cursor: pointer;
+
+  border: none;
+  background: none;
+
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+#btnAddTicket:focus {
+  outline: none;
 }
 
 #circle-active {
