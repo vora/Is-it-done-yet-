@@ -180,7 +180,7 @@ figma.ui.onmessage = (param: IPluginMessage) => {
     if (param.message.resizeWindow == true) {
       figma.ui.resize(280, 340);
     } else {
-      figma.ui.resize(280, 300);
+      figma.ui.resize(280, 310);
     }
   }
 

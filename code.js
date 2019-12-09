@@ -125,7 +125,7 @@ figma.ui.onmessage = (param) => {
             figma.ui.resize(280, 340);
         }
         else {
-            figma.ui.resize(280, 300);
+            figma.ui.resize(280, 310);
         }
     }
     if (param.type === "apply_status") {
