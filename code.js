@@ -1,6 +1,6 @@
 const iFrameWindowDimensions = {
     width: 280,
-    height: 300
+    height: 310
 };
 const setFrameNodeNameFunc = (param) => {
     let ticketNumber = param.message.ticketNumber
