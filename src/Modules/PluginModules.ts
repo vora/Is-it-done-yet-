@@ -1,32 +1,34 @@
-type StatusType =
-  | "Active"
-  | "In-review"
-  | "Needs changes"
-  | "Approved"
-  | "In-development";
+import {
+  IFrameNodeData,
+  IPluginMessage,
+  StatusType
+} from "../Interfaces/PluginInterface";
 
-interface IMessageType {
-  ticketNumber: string;
-  status: StatusType;
-  resizeWindow?: boolean;
-}
-interface IPluginMessage {
-  type: string;
-  message: IMessageType;
-}
+export const setStatusColorFunc = (statusType: StatusType) => {
+  var emojiHex: string = "";
 
-interface IFrameNodeData {
-  status: StatusType;
-  ticketNumber?: string;
-  frameName: string;
-}
+  switch (statusType) {
+    case "Active":
+      emojiHex = "\uD83D\uDD35";
+      break;
+    case "Approved":
+      emojiHex = "\uD83D\uDFE2";
+      break;
+    case "In-development":
+      emojiHex = "\uD83D\uDFE3";
+      break;
+    case "In-review":
+      emojiHex = "\uD83D\uDFE1";
+      break;
+    case "Needs changes":
+      emojiHex = "\uD83D\uDD34";
+      break;
+  }
 
-const iFrameWindowDimensions: ShowUIOptions = {
-  width: 280,
-  height: 310
+  return emojiHex;
 };
 
-const setFrameNodeNameFunc = (param: IPluginMessage) => {
+export const setFrameNodeNameFunc = (param: IPluginMessage) => {
   let ticketNumber = param.message.ticketNumber
     ? " " + param.message.ticketNumber
     : "";
@@ -40,7 +42,7 @@ const setFrameNodeNameFunc = (param: IPluginMessage) => {
   return namePrefix;
 };
 
-const updateFrameNodeNameFunc = (
+export const updateFrameNodeNameFunc = (
   frameNodeInformation: string,
   node: SceneNode,
   param: IPluginMessage
@@ -133,7 +135,10 @@ const updateFrameNodeNameFunc = (
   return newNodeName;
 };
 
-const setFrameNodePluginDataFunc = (name: string, param: IPluginMessage) => {
+export const setFrameNodePluginDataFunc = (
+  name: string,
+  param: IPluginMessage
+) => {
   const frameData: IFrameNodeData = {
     ticketNumber: param.message.ticketNumber ? param.message.ticketNumber : "",
     status: param.message.status ? param.message.status : null,
@@ -141,75 +146,4 @@ const setFrameNodePluginDataFunc = (name: string, param: IPluginMessage) => {
   };
 
   return frameData;
-};
-
-const setStatusColorFunc = (statusType: StatusType) => {
-  var emojiHex: string = "";
-
-  switch (statusType) {
-    case "Active":
-      emojiHex = "\uD83D\uDD35";
-      break;
-    case "Approved":
-      emojiHex = "\uD83D\uDFE2";
-      break;
-    case "In-development":
-      emojiHex = "\uD83D\uDFE3";
-      break;
-    case "In-review":
-      emojiHex = "\uD83D\uDFE1";
-      break;
-    case "Needs changes":
-      emojiHex = "\uD83D\uDD34";
-      break;
-  }
-
-  return emojiHex;
-};
-
-const selectFrameAlert =
-  "Select a frame or multiple frames to apply the status to";
-const selectStatusAlert = "Select a status to apply to selected frame(s)";
-const statusSuccessNotification =
-  "Successfully updated status for selected frame(s)";
-
-figma.showUI(__html__, iFrameWindowDimensions);
-
-figma.ui.onmessage = (param: IPluginMessage) => {
-  if (param.type == "resize_window") {
-    if (param.message.resizeWindow == true) {
-      figma.ui.resize(280, 340);
-    } else {
-      figma.ui.resize(280, 310);
-    }
-  }
-
-  if (param.type === "apply_status") {
-    if (figma.currentPage.selection.length == 0) {
-      alert(selectFrameAlert);
-      figma.closePlugin();
-      return;
-    }
-
-    if (param.message.status == null) {
-      alert(selectStatusAlert);
-      return;
-    }
-
-    figma.currentPage.selection.forEach(node => {
-      var nodePluginData = node.getPluginData(node.id);
-      if (nodePluginData.length == 0) {
-        node.setPluginData(
-          node.id,
-          JSON.stringify(setFrameNodePluginDataFunc(node.name, param))
-        );
-        node.name = setFrameNodeNameFunc(param) + " " + node.name;
-      } else {
-        node.name = updateFrameNodeNameFunc(nodePluginData, node, param);
-      }
-    });
-
-    figma.closePlugin();
-    figma.notify(statusSuccessNotification);
-  }
 };
