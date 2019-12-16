@@ -7,8 +7,8 @@ import {
 } from "./Modules/PluginModules";
 
 const iFrameWindowDimensions: ShowUIOptions = {
-  width: 280,
-  height: 310
+  width: 300,
+  height: 300
 };
 
 const selectFrameAlert =
@@ -22,9 +22,9 @@ figma.showUI(__html__, iFrameWindowDimensions);
 figma.ui.onmessage = (param: IPluginMessage) => {
   if (param.type == "resize_window") {
     if (param.message.resizeWindow == true) {
-      figma.ui.resize(280, 340);
+      figma.ui.resize(300, 340);
     } else {
-      figma.ui.resize(280, 310);
+      figma.ui.resize(300, 300);
     }
   }
 

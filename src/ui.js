@@ -6,6 +6,9 @@ var getTextBoxElement = document.getElementById("ticketNumberContainer");
 var getBoxElements = document.getElementsByClassName("box");
 var getAddSign = document.getElementById("spanDisplayAddSign");
 var getInputButtonContainer = document.getElementById("buttonContainer");
+var getSpanHoverInformationContainer = document.getElementById(
+  "spanHoverInformation"
+);
 var getRadioContainerElements = document.getElementsByClassName(
   "radioContainer"
 );
@@ -14,6 +17,7 @@ getAddTicketButton.addEventListener("click", () => {
   getTextBoxElement.style.display = "block";
   getCancelButton.style.display = "block";
   getAddSign.style.display = "none";
+  getSpanHoverInformationContainer.style.display = "none";
   getInputButtonContainer.style.paddingLeft = "9px";
   var pluginMessageObj = {
     pluginMessage: {
@@ -30,6 +34,7 @@ getCancelButton.addEventListener("click", () => {
   getTextBoxElement.style.display = "none";
   getCancelButton.style.display = "none";
   getAddSign.style.display = "inline";
+  getSpanHoverInformationContainer.style.display = "inline";
   getInputButtonContainer.style.paddingLeft = "15px";
   document.getElementById("ticketNumberContainer").textContent = "";
   var pluginMessageObj = {
