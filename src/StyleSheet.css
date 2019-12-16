@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   height: 35px;
-  max-width: 270px;
+  max-width: 265px;
   padding: 0px 10px 0px 10px;
 }
 
@@ -187,6 +187,55 @@ label {
 
   text-decoration: underline;
   cursor: context-menu;
+
+  position: relative;
+}
+
+#spanHoverInformation #toolTipWindow {
+  visibility: hidden;
+  width: 140px;
+
+  font-size: 13px;
+  font-family: "Roboto", sans-serif;
+  background-color: #ffffff;
+
+  position: absolute;
+  z-index: 1;
+
+  bottom: 100%;
+  left: 0%;
+  margin-left: -80px;
+  margin-bottom: 6px;
+
+  padding: 8px;
+
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+#spanHoverInformation:hover #toolTipWindow {
+  visibility: visible;
+}
+
+#spanHoverInformation #toolTipWindow::after {
+  content: "";
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  margin-left: 0.9em;
+  bottom: -0.8em;
+  left: 77%;
+
+  box-sizing: border-box;
+
+  border: 0.4em solid black;
+  border-color: transparent transparent #ffffff #ffffff;
+
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+
+  box-shadow: -3px 3px 3px 0 rgba(0, 0, 0, 0.25);
 }
 
 #btnAddTicket:focus {
