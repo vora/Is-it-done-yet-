@@ -20,6 +20,16 @@ __*Is It Done Yet?*__  is a simple plugin that enables you to organize frames ac
 4. Select a status that you want added to the selected frames. 
 5. Optionally, you could choose to add a ticket number to any frame for further organization. 
 
+## Installation
+1. Clone the repository: `git clone https://github.com/vora/Is-it-done-yet-.git`
+2. Navigate to the folder `cd Is it done yet_`
+3. Install dependencies `npm install`
+4. Build the plugin `npm run build`
+5. Go a new document in Figma and select `Plugins -> Development -> New Plugin from the menu`
+
+## Contact
+For any feature request, bug report or any other communication, kindly email to [support@ascendum.com](mailto:support@ascendum.com)
+
 ## Release History
 
 * V1.0.0
