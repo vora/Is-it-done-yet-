@@ -28,7 +28,7 @@ __*Is It Done Yet?*__  is a simple plugin that enables you to organize frames ac
 5. Go a new document in Figma and select `Plugins -> Development -> New Plugin from the menu`
 
 ## Contact
-For any feature request, bug report or any other communication, kindly email to [support@ascendum.com](mailto:support@ascendum.com)
+For any feature request, bug report or any other communication, kindly email to [plugin_support@ascendum.com](mailto:plugin_support@ascendum.com)
 
 ## Release History
 
