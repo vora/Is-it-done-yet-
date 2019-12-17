@@ -25,7 +25,7 @@ __*Is It Done Yet?*__  is a simple plugin that enables you to organize frames ac
 2. Navigate to the folder `cd Is it done yet_`
 3. Install dependencies `npm install`
 4. Build the plugin `npm run build`
-5. Go a new document in Figma and select `Plugins -> Development -> New Plugin from the menu`
+5. Go a new document in Figma and select `Plugins -> Development -> Is it done yet?`
 
 ## Contact
 For any feature request, bug report or any other communication, kindly email to [plugin_support@ascendum.com](mailto:plugin_support@ascendum.com)
